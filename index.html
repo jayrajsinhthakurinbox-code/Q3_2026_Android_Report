@@ -1,0 +1,1190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Android Q3 2026 Report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: fixed 1600×900 slide canvas scaled to fit (true deck); jade full-bleed for cover/dividers, paper for content. Narrow screens fall back to scrolling slides. Build-log vernacular (version · versionCode) is the signature. Motion: every slide choreographs its own entrance; charts draw themselves. */
+:root{
+  --paper:#F4F7F5; --surface:#FFFFFF; --sunk:#EAF0ED; --ink:#0E1E1A; --muted:#5A6A64; --line:#DAE3DF; --letter:#DFE7E3;
+  --accent:#0B7A5E; --accent-2:#0F9B76; --accent-soft:#DCF0E8;
+  --warn:#A8670F; --warn-soft:#FAEDD5; --gap:#B4442E; --gap-soft:#F8E3DC; --info:#2F5D9E; --info-soft:#E2EAF6; --plum:#6B4FA0; --plum-soft:#EEE8F7;
+  --hero:#0B4F42; --hero-2:#0E6152; --hero-ink:#EEF7F3; --hero-muted:#A6CFC2; --hero-acc:#86E6C3; --hero-warm:#F2C46D; --hero-line:rgba(238,247,243,.18);
+  --hatch:rgba(14,30,26,.06); --shadow:0 30px 80px -30px rgba(14,40,32,.35); --lift:0 18px 40px -22px rgba(14,40,32,.35);
+  --f-display:"Bricolage Grotesque","Avenir Next","Segoe UI",sans-serif;
+  --f-body:"IBM Plex Sans","Helvetica Neue",Arial,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --ease:cubic-bezier(.2,.75,.2,1); --spring:cubic-bezier(.3,1.6,.5,1);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#0F1715; --surface:#16211E; --sunk:#121C19; --ink:#E6EFEB; --muted:#93A6A0; --line:#25342F; --letter:#080D0C;
+  --accent:#46C99C; --accent-2:#5FD9AE; --accent-soft:#16392E;
+  --warn:#E5AA4E; --warn-soft:#3A2C14; --gap:#EF8169; --gap-soft:#3D2019; --info:#82A8E2; --info-soft:#1A2840; --plum:#B9A2E8; --plum-soft:#2A2140;
+  --hero:#0A3B32; --hero-2:#0D4A3F; --hero-ink:#EEF7F3; --hero-muted:#93BFB1; --hero-acc:#7FE0BC; --hero-warm:#F2C46D; --hero-line:rgba(238,247,243,.14);
+  --hatch:rgba(230,239,235,.05); --shadow:0 30px 80px -30px rgba(0,0,0,.7); --lift:0 18px 40px -22px rgba(0,0,0,.8); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0F1715; --surface:#16211E; --sunk:#121C19; --ink:#E6EFEB; --muted:#93A6A0; --line:#25342F; --letter:#080D0C;
+  --accent:#46C99C; --accent-2:#5FD9AE; --accent-soft:#16392E;
+  --warn:#E5AA4E; --warn-soft:#3A2C14; --gap:#EF8169; --gap-soft:#3D2019; --info:#82A8E2; --info-soft:#1A2840; --plum:#B9A2E8; --plum-soft:#2A2140;
+  --hero:#0A3B32; --hero-2:#0D4A3F; --hero-ink:#EEF7F3; --hero-muted:#93BFB1; --hero-acc:#7FE0BC; --hero-warm:#F2C46D; --hero-line:rgba(238,247,243,.14);
+  --hatch:rgba(230,239,235,.05); --shadow:0 30px 80px -30px rgba(0,0,0,.7); --lift:0 18px 40px -22px rgba(0,0,0,.8); color-scheme:dark}
+:root[data-theme="light"]{color-scheme:light}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--letter);color:var(--ink);font-family:var(--f-body);font-size:20px;line-height:1.45;overflow:hidden;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:6px}
+h1,h2,h3{font-family:var(--f-display);margin:0;text-wrap:balance}
+p{margin:0}
+
+/* ===== canvas ===== */
+.viewport{position:fixed;inset:0;overflow-y:auto;overflow-x:hidden;scroll-snap-type:y mandatory;overscroll-behavior-y:contain}
+.canvas{display:block}
+.panel{position:relative;height:100vh;height:100dvh;scroll-snap-align:start;scroll-snap-stop:always}
+.slide{position:absolute;left:50%;top:50%;width:1600px;height:900px;padding:68px 92px 92px;display:flex;flex-direction:column;gap:36px;background:var(--paper);overflow:hidden;border-radius:12px;box-shadow:var(--shadow);transform:translate(-50%,-50%) translateY(var(--y,0px)) scale(calc(var(--s,1) * var(--k,1)));opacity:var(--o,1);will-change:transform,opacity}
+.armed .slide:not(.go),.armed .slide:not(.go) *,.armed .slide:not(.go)::before,.armed .slide:not(.go)::after,.armed .slide:not(.go) *::before,.armed .slide:not(.go) *::after{animation-play-state:paused!important}
+.slide.hero{background:var(--hero);color:var(--hero-ink)}
+.slide.hero::before,.slide.hero::after{content:"";position:absolute;border-radius:50%;pointer-events:none;filter:blur(10px)}
+.slide.hero::before{width:900px;height:900px;right:-260px;top:-380px;background:radial-gradient(closest-side,var(--hero-2),transparent);animation:drift 18s ease-in-out infinite alternate}
+.slide.hero::after{width:700px;height:700px;left:-260px;bottom:-420px;background:radial-gradient(closest-side,rgba(134,230,195,.14),transparent);animation:drift 22s ease-in-out infinite alternate-reverse}
+.slide.hero > *{position:relative;z-index:1}
+@keyframes drift{to{translate:-120px 90px;scale:1.15}}
+.sf{position:absolute;left:92px;right:92px;bottom:32px;display:flex;gap:24px;align-items:center;font-family:var(--f-mono);font-size:13px;letter-spacing:.06em;color:var(--muted);text-transform:uppercase}
+.sf::before{content:"";width:10px;height:10px;border-radius:3px;background:var(--accent)}
+.sf .grow{flex:1;height:1px;background:var(--line);transform-origin:left}
+.slide .sf .grow{animation:gx 1.2s var(--ease) both .3s}
+.hero .sf{color:var(--hero-muted)}.hero .sf::before{background:var(--hero-acc)}.hero .sf .grow{background:var(--hero-line)}
+
+/* ===== motion library ===== */
+.slide [data-a]{animation:up .75s var(--ease) both;animation-delay:calc(var(--d,0) * 90ms + 120ms)}
+.slide .sh .eyebrow{animation:up .6s var(--ease) both .05s}
+.slide .sh h2{animation:up .7s var(--ease) both .12s}
+.slide .sh .r{animation:up .7s var(--ease) both .22s}
+@keyframes up{from{opacity:0;translate:0 26px}to{opacity:1;translate:0 0}}
+@keyframes gx{from{scale:0 1}}
+@keyframes gy{from{scale:1 0}}
+@keyframes pop{0%{scale:0;opacity:0}100%{scale:1;opacity:1}}
+@keyframes draw{from{stroke-dasharray:0 1000}}
+@keyframes ringfill{from{stroke-dashoffset:389.56}}
+@keyframes wipe{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+@keyframes flash{from{opacity:.2;translate:0 8px}to{opacity:1;translate:0 0}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(229,170,78,.55)}50%{box-shadow:0 0 0 14px rgba(229,170,78,0)}}
+@keyframes blink{50%{opacity:0}}
+.lift{transition:transform .3s var(--ease),box-shadow .3s var(--ease),border-color .3s}
+.lift:hover{transform:translateY(-6px);box-shadow:var(--lift);border-color:var(--accent)}
+
+/* ===== type ===== */
+.eyebrow{font-family:var(--f-mono);font-size:15px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);display:flex;gap:14px;align-items:center}
+.eyebrow span{color:var(--muted)}
+.hero .eyebrow{color:var(--hero-acc)}.hero .eyebrow span{color:var(--hero-muted)}
+h2{font-size:62px;line-height:1.02;font-weight:700;letter-spacing:-.025em}
+h3{font-size:24px;line-height:1.2;font-weight:700;letter-spacing:-.01em}
+.sh{display:flex;justify-content:space-between;align-items:flex-end;gap:56px}
+.sh .l{display:flex;flex-direction:column;gap:14px;min-width:0}
+.sh .r{max-width:500px;color:var(--muted);font-size:19px;padding-bottom:6px}
+.sh .r strong{color:var(--ink);font-weight:600}
+.lede{font-size:22px;color:var(--muted);max-width:60ch}
+.small{font-size:15px;color:var(--muted)}
+.mono{font-family:var(--f-mono)}
+.body{flex:1;min-height:0;display:flex;flex-direction:column;gap:24px}
+
+/* ===== chips ===== */
+.chip{display:inline-flex;align-items:center;gap:7px;font-family:var(--f-mono);font-size:12px;letter-spacing:.05em;padding:4px 10px;border-radius:999px;white-space:nowrap;text-transform:uppercase;font-weight:500}
+.chip::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.c-strong{background:var(--accent-soft);color:var(--accent)}
+.c-moderate{background:var(--info-soft);color:var(--info)}
+.c-ios{background:var(--plum-soft);color:var(--plum)}
+.c-risk{background:var(--warn-soft);color:var(--warn)}
+.c-gap{background:var(--gap-soft);color:var(--gap)}
+.c-neutral{background:var(--sunk);color:var(--muted)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:24px 26px;display:flex;flex-direction:column;gap:14px;min-width:0}
+
+/* ===== cover ===== */
+.cover{display:grid;grid-template-columns:1fr 430px;gap:64px;flex:1;min-height:0}
+.cover .l{display:flex;flex-direction:column;justify-content:center;gap:30px;min-width:0}
+.cover h1{font-size:150px;line-height:.86;font-weight:800;letter-spacing:-.045em}
+.cover h1 .ln{display:block;overflow:hidden;padding-bottom:.06em}
+.cover h1 .ln > span{display:inline-block}
+.slide .cover h1 .ln > span{animation:rise 1s var(--ease) both}
+.slide .cover h1 .ln:nth-child(2) > span{animation-delay:.12s}
+@keyframes rise{from{translate:0 105%}}
+.cover h1 em{font-style:normal;color:var(--hero-acc)}
+.cover .lede{color:var(--hero-muted);font-size:23px;max-width:34em}
+.cover .lede strong{color:var(--hero-ink);font-weight:600}
+.cmeta{display:flex;gap:44px;border-top:1px solid var(--hero-line);padding-top:22px;margin:0}
+.cmeta div{display:flex;flex-direction:column;gap:4px}
+.cmeta dt{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--hero-muted)}
+.cmeta dd{margin:0;font-weight:500;font-size:18px}
+.log{border:1px solid var(--hero-line);border-radius:20px;background:rgba(0,0,0,.16);display:flex;flex-direction:column;min-height:0;overflow:hidden;backdrop-filter:blur(6px)}
+.log .lh{display:flex;justify-content:space-between;align-items:center;padding:18px 22px;border-bottom:1px solid var(--hero-line);font-family:var(--f-mono);font-size:13px;color:var(--hero-muted);letter-spacing:.06em;text-transform:uppercase}
+.log .lh b{color:var(--hero-acc);font-weight:500;display:flex;align-items:center;gap:8px}
+.log .lh b::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--hero-acc);animation:blink 1.4s steps(1) infinite}
+.log .win{flex:1;overflow:hidden;position:relative;-webkit-mask-image:linear-gradient(transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(transparent,#000 12%,#000 88%,transparent)}
+.log .reel{position:absolute;left:0;right:0;top:0;animation:reel 90s linear infinite}
+.log .reel.static{position:static}
+.log .row.big{padding:20px 22px;grid-template-columns:70px 1fr auto}
+.log .row.big .a{font-size:20px}
+.slide .log .row.big{animation:up .6s var(--ease) both;animation-delay:calc(var(--i) * 140ms + 500ms)}
+.log .foot{padding:16px 22px;font-family:var(--f-mono);font-size:12px;color:var(--hero-muted);letter-spacing:.04em;margin-top:auto;border-top:1px solid var(--hero-line)}
+.log:hover .reel{animation-play-state:paused}
+@keyframes reel{to{transform:translateY(-50%)}}
+.log .row{display:grid;grid-template-columns:64px 1fr auto;gap:12px;padding:11px 22px;border-bottom:1px solid var(--hero-line);font-family:var(--f-mono);font-size:14px;align-items:baseline}
+.log .row .d{color:var(--hero-muted)}
+.log .row .a{font-family:var(--f-body);font-weight:600;font-size:16px;color:var(--hero-ink)}
+.log .row .v{color:var(--hero-acc)}
+.barcode{position:relative;height:56px;flex:none}
+.barcode i{position:absolute;top:0;bottom:18px;width:4px;margin-left:-2px;border-radius:2px;background:var(--hero-acc);transform-origin:bottom}
+.barcode i.r{background:var(--hero-warm)}
+.barcode i.o{background:var(--hero-muted)}
+.slide .barcode i{animation:gy .6s var(--spring) both;animation-delay:calc(var(--i) * 28ms + 700ms)}
+.barcode .ml{position:absolute;bottom:0;font-family:var(--f-mono);font-size:11px;color:var(--hero-muted);letter-spacing:.1em;text-transform:uppercase}
+.barcode .mg{position:absolute;top:0;bottom:18px;width:1px;background:var(--hero-line)}
+
+/* ===== divider ===== */
+.divider .wrap{flex:1;display:grid;grid-template-columns:auto 1fr;gap:72px;align-items:center}
+.divider .num{font-family:var(--f-display);font-weight:800;font-size:340px;line-height:.8;letter-spacing:-.06em;color:transparent;-webkit-text-stroke:2px var(--hero-acc)}
+.slide .divider .num{animation:wipe 1.2s var(--ease) both .1s}
+.divider h1{font-size:110px;line-height:.92;font-weight:800;letter-spacing:-.04em}
+.divider .lede{color:var(--hero-muted);margin-top:26px}
+.divider .tags{display:flex;gap:10px;flex-wrap:wrap;margin-top:30px}
+.divider .tags span{border:1px solid var(--hero-line);border-radius:999px;padding:7px 16px;font-size:16px;color:var(--hero-ink)}
+.slide .divider .tags span{animation:pop .5s var(--spring) both;animation-delay:calc(var(--i) * 80ms + 650ms)}
+
+/* ===== glance ===== */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);border-top:2px solid var(--ink);border-bottom:1px solid var(--line)}
+.kpi{padding:24px 28px 26px 0;display:flex;flex-direction:column;gap:6px;min-width:0}
+.kpi + .kpi{padding-left:28px;border-left:1px solid var(--line)}
+.kpi .n{font-family:var(--f-display);font-size:104px;font-weight:800;line-height:.9;letter-spacing:-.045em;font-variant-numeric:tabular-nums}
+.kpi .n small{font-size:.42em;color:var(--muted);letter-spacing:-.01em}
+.kpi .l{font-weight:600;font-size:20px}
+.kpi .dd{font-size:15px;color:var(--muted)}
+.gl2{display:grid;grid-template-columns:1fr 1.15fr;gap:24px;flex:1;min-height:0}
+.mbars{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:end;flex:1;min-height:150px}
+.mbar{display:flex;flex-direction:column;align-items:center;gap:8px;height:100%;justify-content:flex-end}
+.mbar .v{font-family:var(--f-display);font-weight:700;font-size:30px;font-variant-numeric:tabular-nums}
+.mbar .b{width:100%;max-width:110px;border-radius:10px 10px 3px 3px;background:linear-gradient(var(--accent-2),var(--accent));transform-origin:bottom}
+.slide .mbar .b{animation:gy .9s var(--ease) both;animation-delay:calc(var(--i) * 120ms + 450ms)}
+.mbar .k{font-family:var(--f-mono);font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+.wins{display:grid;grid-template-columns:1fr 1fr;gap:12px 24px}
+.win{display:flex;flex-direction:column;gap:2px;border-top:1px solid var(--line);padding-top:10px}
+.win b{font-family:var(--f-display);font-size:30px;font-weight:700;color:var(--accent);letter-spacing:-.02em;line-height:1.1}
+.win > span{font-size:15px;color:var(--muted)}
+
+/* ===== rules ===== */
+.rules{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;flex:1;min-height:0}
+.rule{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:28px 26px;display:flex;flex-direction:column;gap:18px}
+.rule .ix{font-family:var(--f-mono);font-size:14px;color:var(--muted)}
+.rule .eq{display:flex;flex-direction:column;gap:8px;margin-top:auto}
+.rule .eq .a{font-family:var(--f-display);font-weight:700;font-size:30px;line-height:1.05;letter-spacing:-.02em}
+.rule .eq .ne{font-family:var(--f-display);font-size:50px;line-height:.8;color:var(--gap);font-weight:600;display:inline-block}
+.slide .rule .eq .ne{animation:pop .6s var(--spring) both;animation-delay:calc(var(--d) * 90ms + 600ms)}
+.rule .eq .b{font-family:var(--f-display);font-weight:700;font-size:30px;line-height:1.05;letter-spacing:-.02em;color:var(--muted);position:relative;align-self:flex-start}
+.rule.yes .eq .ne{color:var(--accent)}
+.rule.yes .eq .b{color:var(--ink)}
+.rule.yes .eq .b::after{display:none}
+.rule .eq .b::after{content:"";position:absolute;left:-2px;right:-2px;top:52%;height:3px;border-radius:2px;background:var(--gap);transform-origin:left}
+.slide .rule.yes .eq .ne{color:var(--accent)}
+.rule.yes .eq .b{color:var(--ink)}
+.rule.yes .eq .b::after{display:none}
+.rule .eq .b::after{animation:gx .5s var(--ease) both;animation-delay:calc(var(--d) * 90ms + 800ms)}
+.rule p{font-size:16px;color:var(--muted)}
+.legend{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+
+/* ===== targets ===== */
+.tgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px 12px;flex:1;min-height:0;align-content:start}
+.tcard{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:11px 16px 9px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.slide .tcard{animation:up .6s var(--ease) both;animation-delay:calc(var(--i) * 45ms + 250ms)}
+.tcard .top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:4px}
+.tcard .nm{font-family:var(--f-display);font-weight:700;font-size:21px;letter-spacing:-.01em}
+.kind{font-family:var(--f-mono);font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;border:1px solid var(--line);border-radius:6px;padding:2px 6px}
+.mrow{display:grid;grid-template-columns:1fr auto;gap:10px;font-size:14px;border-top:1px dashed var(--line);padding-top:4px;line-height:1.3}
+.mrow .lab{color:var(--muted);min-width:0}
+.mrow .val{font-family:var(--f-mono);font-size:13.5px;text-align:right;font-variant-numeric:tabular-nums}
+.mrow .val em{font-style:normal;color:var(--accent);font-weight:500}
+
+/* ===== timeline ===== */
+.tl{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:12px 26px 10px;overflow-x:auto}
+.tl-in{min-width:640px}
+.tl-axis,.tl-row{display:grid;grid-template-columns:150px 1fr 40px;gap:18px;align-items:center}
+.tl-axis{height:30px}
+.tl-row{height:36px;border-top:1px solid var(--line)}
+.tl-name{font-weight:600;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;gap:9px;align-items:center}
+.tl-name i{width:8px;height:8px;border-radius:50%;flex:none}
+.tl-n{font-family:var(--f-mono);font-size:14px;color:var(--muted);text-align:right;font-variant-numeric:tabular-nums}
+.track{position:relative;height:100%}
+.track .post{position:absolute;top:0;bottom:0;right:0;background:repeating-linear-gradient(135deg,var(--hatch) 0 5px,transparent 5px 10px)}
+.track .mg{position:absolute;top:0;bottom:0;width:1px;background:var(--line)}
+.track .lane-l{position:absolute;left:0;right:0;top:50%;height:2px;margin-top:-1px;background:var(--sunk);transform-origin:left}
+.slide .track .lane-l{animation:gx 1s var(--ease) both;animation-delay:calc(var(--r) * 50ms + 250ms)}
+.axis-lab{position:absolute;top:6px;font-family:var(--f-mono);font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;transform:translateX(8px);white-space:nowrap}
+.axis-lab.last{transform:translateX(calc(-100% - 6px))}
+.dot{position:absolute;top:50%;width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:50%;background:var(--accent);border:3px solid var(--surface);box-shadow:0 0 0 1.5px var(--accent);cursor:pointer;padding:0;transition:transform .2s var(--spring)}
+.slide .dot{animation:pop .5s var(--spring) both;animation-delay:calc(var(--i) * 45ms + 500ms)}
+.dot.risk{background:var(--warn);box-shadow:0 0 0 1.5px var(--warn)}
+.slide .dot.risk{animation:pop .5s var(--spring) both calc(var(--i) * 45ms + 500ms),pulse 2s ease-in-out infinite 2.2s}
+.dot.rev{background:var(--warn);box-shadow:0 0 0 1.5px var(--warn)}
+.dot.oct{background:var(--muted);box-shadow:0 0 0 1.5px var(--muted)}
+.dot.mod{background:var(--info);box-shadow:0 0 0 1.5px var(--info)}
+.dot:hover,.dot.sel{transform:scale(1.55)}
+.nogap.int{border-color:var(--info);color:var(--info)}
+.nogap.risk{border-color:var(--warn);color:var(--warn);background:var(--warn-soft)}
+.nogap{position:absolute;inset:7px 0;border:1.5px dashed var(--gap);border-radius:8px;display:flex;align-items:center;padding-left:14px;font-family:var(--f-mono);font-size:12px;color:var(--gap);text-transform:uppercase;letter-spacing:.06em;background:var(--surface)}
+.tl-detail{display:grid;grid-template-columns:110px 1fr;gap:4px 22px;padding:16px 24px;border-radius:16px;background:var(--accent-soft);min-height:84px;align-items:start}
+.tl-detail > *{animation:flash .35s var(--ease) both}
+.tl-detail .when{font-family:var(--f-display);font-size:26px;font-weight:700;color:var(--accent);grid-row:span 2;line-height:1.1}
+.tl-detail .what{font-weight:600;font-size:18px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.tl-detail .notes{font-size:16px}
+
+/* ===== assessment ===== */
+.asl{display:grid;grid-template-columns:400px 1fr;gap:40px;flex:1;min-height:0;align-items:center}
+.donut{position:relative;width:360px;height:360px;margin:0 auto}
+.donut svg{width:100%;height:100%;transform:rotate(-90deg)}
+.donut circle{fill:none;stroke-width:44}
+.slide .donut .seg{animation:draw 1s var(--ease) both;animation-delay:calc(var(--i) * 260ms + 350ms)}
+.donut .c{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.donut .c b{font-family:var(--f-display);font-size:84px;font-weight:800;line-height:.9;letter-spacing:-.04em}
+.donut .c b small{font-size:.45em;color:var(--muted)}
+.donut .c > span{font-size:15px;color:var(--muted);max-width:170px}
+.assess{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.acol{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px 22px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.slide .acol{animation:up .6s var(--ease) both;animation-delay:calc(var(--i) * 260ms + 450ms)}
+.acol .hd{display:flex;justify-content:space-between;align-items:center}
+.acol .big{font-family:var(--f-display);font-size:48px;font-weight:800;line-height:.9}
+.acol .why{font-size:15px;color:var(--muted)}
+.acol .apps{display:flex;flex-wrap:wrap;gap:6px}
+.acol .apps span{font-size:14px;padding:4px 10px;border-radius:8px;background:var(--sunk)}
+.acol .apps span b{font-family:var(--f-mono);font-weight:500;color:var(--muted);font-size:12px;margin-left:6px}
+
+/* ===== themes ===== */
+.themes{display:flex;flex-direction:column;gap:14px;flex:1;justify-content:center}
+.th{display:grid;grid-template-columns:300px 1fr 60px;gap:24px;align-items:center}
+.slide .th{animation:up .6s var(--ease) both;animation-delay:calc(var(--i) * 70ms + 250ms)}
+.th .lab{font-weight:600;font-size:19px;line-height:1.2}
+.th .lab small{display:block;font-weight:400;color:var(--muted);font-size:14px;margin-top:2px}
+.th .bar{height:40px;border-radius:10px;background:var(--sunk);position:relative;overflow:hidden}
+.th .bar b{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,var(--accent),var(--accent-2));border-radius:10px;transform-origin:left}
+.slide .th .bar b{animation:gx 1s var(--ease) both;animation-delay:calc(var(--i) * 70ms + 450ms)}
+.th .bar span{position:absolute;left:16px;top:50%;transform:translateY(-50%);font-family:var(--f-mono);font-size:13px;color:var(--paper);white-space:nowrap;overflow:hidden;max-width:calc(100% - 24px);text-overflow:ellipsis}
+.slide .th .bar span{animation:up .5s var(--ease) both;animation-delay:calc(var(--i) * 70ms + 900ms)}
+.th .num{font-family:var(--f-display);font-weight:800;font-size:34px;text-align:right;font-variant-numeric:tabular-nums}
+.th .num small{font-size:.5em;color:var(--muted);font-weight:600}
+
+/* ===== other apps ===== */
+.others{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;flex:1;min-height:0}
+.oc{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:15px 16px 13px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.slide .oc{animation:up .55s var(--ease) both;animation-delay:calc(var(--i) * 60ms + 250ms)}
+.oc .hd{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.oc .nm{font-family:var(--f-display);font-weight:700;font-size:21px;letter-spacing:-.01em}
+.oc .ct{font-family:var(--f-display);font-weight:800;font-size:34px;line-height:1;color:var(--accent)}
+.mini{position:relative;height:22px;border-radius:6px;background:var(--sunk);flex:none}
+.mini .mg{position:absolute;top:0;bottom:0;width:1px;background:var(--line)}
+.mini i{position:absolute;top:50%;width:11px;height:11px;margin:-5.5px 0 0 -5.5px;border-radius:50%;background:var(--accent);border:2px solid var(--surface)}
+.mini i.oct{background:var(--muted)}
+.slide .mini i{animation:pop .45s var(--spring) both;animation-delay:calc(var(--i) * 60ms + 600ms)}
+.oc ul{list-style:none;margin:0;padding:0;font-family:var(--f-mono);font-size:12.5px;color:var(--muted);display:flex;flex-direction:column;gap:3px}
+.oc li{display:flex;justify-content:space-between;gap:8px;border-top:1px dashed var(--line);padding-top:3px}
+.oc p{font-size:14px;line-height:1.35;margin-top:auto}
+.flow .others{grid-template-columns:1fr 1fr}
+@media (max-width:520px){.flow .others{grid-template-columns:1fr}}
+.applist{overflow-y:auto;min-height:0;padding-right:4px}
+.applist .grp{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:10px 14px 4px;white-space:nowrap}
+.applist .appbtn{padding:7px 14px;font-size:16px}
+
+/* ===== submitted builds ===== */
+.subs{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;flex:1;min-height:0}
+.sub{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:24px;display:flex;flex-direction:column;gap:12px;min-width:0;position:relative;overflow:hidden}
+.sub::before{content:"";position:absolute;left:0;right:0;top:0;height:6px;background:var(--accent);transform-origin:left}
+.slide .sub::before{animation:gx .8s var(--ease) both;animation-delay:calc(var(--i) * 140ms + 350ms)}
+.slide .sub{animation:up .6s var(--ease) both;animation-delay:calc(var(--i) * 140ms + 200ms)}
+.sub .dt{font-family:var(--f-display);font-weight:800;font-size:44px;line-height:1;letter-spacing:-.03em;color:var(--accent)}
+.sub h3{font-size:30px;letter-spacing:-.02em}
+.sub .vv{font-family:var(--f-mono);font-size:15px;color:var(--muted)}
+.sub ul{margin:0;padding:0 0 0 18px;font-size:16px;display:flex;flex-direction:column;gap:6px}
+.sub .tr{margin-top:auto;border-top:1px dashed var(--line);padding-top:12px;font-size:14px;color:var(--muted)}
+.excluded{display:flex;gap:20px;align-items:center;padding:16px 22px;border-radius:16px;background:var(--info-soft);font-size:17px}
+.excluded b{font-family:var(--f-display);font-size:34px;font-weight:800;color:var(--info);line-height:1}
+.flow .subs{grid-template-columns:1fr}
+.flow .excluded{flex-direction:column;align-items:flex-start;gap:6px}
+
+/* ===== explorer ===== */
+.explorer{display:grid;grid-template-columns:280px 1fr;gap:28px;flex:1;min-height:0}
+.explorer > *{min-width:0;min-height:0}
+.applist{display:flex;flex-direction:column;gap:3px}
+.appbtn{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 14px;border-radius:12px;border:1px solid transparent;background:transparent;cursor:pointer;text-align:left;white-space:nowrap;font-size:17px;transition:background .2s,transform .2s var(--ease)}
+.appbtn:hover{background:var(--surface);transform:translateX(4px)}
+.appbtn[aria-selected="true"]{background:var(--surface);border-color:var(--line);box-shadow:0 6px 18px -12px rgba(0,0,0,.3)}
+.appbtn .nm{font-weight:600;display:flex;align-items:center;gap:10px}
+.appbtn .nm i{width:9px;height:9px;border-radius:50%}
+.appbtn .ct{font-family:var(--f-mono);font-size:13px;color:var(--muted)}
+.appview{display:flex;flex-direction:column;gap:16px;min-height:0}
+.appview.swap > *{animation:up .45s var(--ease) both}
+.appview.swap > *:nth-child(2){animation-delay:.05s}.appview.swap > *:nth-child(3){animation-delay:.1s}
+.appview .ah{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.appview .ah h3{font-size:40px;letter-spacing:-.02em}
+.aside{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.5fr);gap:18px;flex:1;min-height:0}
+.aside .card{min-height:0}
+.scroll{overflow-y:auto;min-height:0;padding-right:6px}
+.blist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.blist li{display:grid;grid-template-columns:72px 1fr;gap:4px 16px;padding:13px 0;border-top:1px solid var(--line)}
+.swap .blist li{animation:up .45s var(--ease) both;animation-delay:calc(var(--i) * 60ms + 120ms)}
+.blist li:first-child{border-top:0;padding-top:0}
+.blist .dt{font-family:var(--f-mono);font-size:13px;color:var(--muted);grid-row:span 2;padding-top:3px}
+.blist .vv{font-family:var(--f-mono);font-size:15px;font-weight:500;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.blist .nt{font-size:16px}
+.note{font-size:15px;padding:12px 16px;border-radius:12px;background:var(--warn-soft)}
+.note.gap{background:var(--gap-soft)}
+.note.int{background:var(--info-soft)}
+
+/* ===== pbp ===== */
+.pbp{display:grid;grid-template-columns:1fr 520px;gap:56px;flex:1;min-height:0}
+.pbp .l{display:flex;flex-direction:column;gap:22px;justify-content:center}
+.pbp h2{font-size:58px}
+.ver{font-family:var(--f-mono);font-size:15px;display:inline-flex;gap:10px;align-items:center;background:var(--warn-soft);color:var(--warn);padding:6px 12px;border-radius:8px;align-self:flex-start}
+.feat{display:flex;flex-wrap:wrap;gap:8px}
+.feat span{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 14px;font-size:15px}
+.slide .feat span{animation:pop .45s var(--spring) both;animation-delay:calc(var(--i) * 45ms + 600ms)}
+.steps{display:flex;flex-direction:column;justify-content:center;position:relative}
+.step{display:grid;grid-template-columns:56px 1fr;gap:20px;padding:16px 0;position:relative}
+.slide .step{animation:up .6s var(--ease) both;animation-delay:calc(var(--i) * 260ms + 400ms)}
+.step .k{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-mono);font-size:20px;font-weight:500;border:2px solid var(--line);background:var(--surface);position:relative;z-index:1}
+.step:not(:last-child)::after{content:"";position:absolute;left:27px;top:72px;bottom:-16px;width:2px;background:var(--line);transform-origin:top}
+.slide .step:not(:last-child)::after{animation:gy .5s var(--ease) both;animation-delay:calc(var(--i) * 260ms + 650ms)}
+.step.done .k{background:var(--accent);border-color:var(--accent);color:var(--paper)}
+.step.done:not(:last-child)::after{background:var(--accent)}
+.step.stuck .k{background:var(--warn-soft);border-color:var(--warn);color:var(--warn)}
+.slide .step.stuck .k{animation:pulse 2s ease-in-out infinite 1.6s}
+.step.todo .k{border-style:dashed;color:var(--muted)}
+.step b{font-size:22px;font-family:var(--f-display);font-weight:700;display:block}
+.step span{font-size:15px;color:var(--muted)}
+.step .s{font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.step.done .s{color:var(--accent)}.step.stuck .s{color:var(--warn)}
+
+/* ===== revamps ===== */
+.revs{display:grid;grid-template-columns:1fr 1fr;gap:22px;flex:1;min-height:0}
+.revc{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:28px 30px 28px 36px;display:flex;flex-direction:column;gap:16px;min-width:0;position:relative;overflow:hidden}
+.revc::before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:var(--warn);transform-origin:top}
+.slide .revc::before{animation:gy .9s var(--ease) both;animation-delay:calc(var(--d) * 90ms + 300ms)}
+.revc .top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.revc h3{font-size:44px;letter-spacing:-.03em;line-height:1}
+.revc .sub{font-family:var(--f-mono);font-size:14px;color:var(--muted);margin-top:8px;display:block}
+.revc .when{text-align:right;font-family:var(--f-display);font-weight:800;font-size:40px;line-height:1;color:var(--warn);letter-spacing:-.02em;white-space:nowrap}
+.revc .when small{display:block;font-family:var(--f-mono);font-size:12px;font-weight:500;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-top:6px}
+.revc .tg{margin-top:auto;border-top:1px dashed var(--line);padding-top:14px;font-size:15px;color:var(--muted)}
+.revc .tg b{color:var(--ink);font-weight:600}
+.flow .revs{grid-template-columns:1fr}
+.otile{background:var(--hero);color:var(--hero-ink);border-radius:18px;padding:18px;display:flex;flex-direction:column;justify-content:space-between;gap:10px}
+.slide .otile{animation:up .55s var(--ease) both;animation-delay:calc(var(--i) * 60ms + 250ms)}
+.otile b{font-family:var(--f-display);font-size:64px;font-weight:800;line-height:.9;color:var(--hero-acc);letter-spacing:-.04em}
+.otile span{font-size:16px;color:var(--hero-muted)}
+
+/* ===== gaps ===== */
+.gaps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;flex:1;min-height:0}
+.gapc{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:26px 24px;display:flex;flex-direction:column;gap:14px}
+.gapc h3{font-size:30px;letter-spacing:-.02em}
+.gapc p{font-size:16px;color:var(--muted)}
+.gapc .need{margin-top:auto;border-top:1px dashed var(--line);padding-top:14px;display:flex;flex-direction:column;gap:4px}
+.gapc .need span{font-family:var(--f-mono);font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+.gapc .need b{font-weight:600;font-size:16px}
+
+/* ===== cost ===== */
+.costtop{display:grid;grid-template-columns:auto 1fr;gap:48px;align-items:center;padding:22px 30px;border-radius:20px;background:var(--accent-soft)}
+.costtop .big{font-family:var(--f-display);font-size:88px;font-weight:800;line-height:.9;color:var(--accent);letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.costtop .big small{font-size:.38em;font-weight:700;letter-spacing:-.01em}
+.costtop p{font-size:18px}
+.costs{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;flex:1;min-height:0}
+.cost{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:22px 24px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.cost h3{font-size:24px}
+.cost .res{font-family:var(--f-display);font-weight:800;font-size:44px;line-height:1;letter-spacing:-.03em;color:var(--accent);white-space:nowrap;font-variant-numeric:tabular-nums}
+.cbar{display:grid;grid-template-columns:1fr auto;gap:6px 10px;font-size:13px}
+.cbar .k{font-family:var(--f-mono);color:var(--muted);text-transform:uppercase;font-size:11px;letter-spacing:.08em}
+.cbar .v{font-family:var(--f-mono);text-align:right;font-variant-numeric:tabular-nums}
+.cbar .t{grid-column:1/-1;height:12px;border-radius:6px;background:var(--sunk);position:relative;overflow:hidden}
+.cbar .t b{position:absolute;inset:0 auto 0 0;border-radius:6px;background:var(--muted);opacity:.55;transform-origin:left}
+.cbar .t b.after{background:var(--accent);opacity:1}
+.slide .cbar .t b{animation:gx 1s var(--ease) both;animation-delay:calc(var(--d) * 90ms + 450ms)}
+.slide .cbar + .cbar .t b{animation-delay:calc(var(--d) * 90ms + 750ms)}
+.cost p{font-size:15px;color:var(--muted);margin-top:auto}
+.insight{display:flex;gap:20px;align-items:baseline;font-size:17px;border-top:1px solid var(--line);padding-top:16px}
+.insight b{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);white-space:nowrap;font-weight:500}
+
+.costs2{display:grid;grid-template-columns:1fr 1fr;gap:20px;flex:1;min-height:0}
+.costs2 .cost{padding:28px 32px;gap:18px}
+.costs2 .cost h3{font-size:30px}
+.costs2 .cost .res{font-size:84px}
+.costs2 .cbar{font-size:15px}.costs2 .cbar .t{height:16px}
+.costs2 .cost p{font-size:17px}
+.incident{display:flex;gap:20px;align-items:baseline;font-size:16px;color:var(--muted);padding:14px 20px;border:1px dashed var(--line);border-radius:14px}
+.incident b{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);white-space:nowrap;font-weight:500}
+.flow .costs2{grid-template-columns:1fr}.flow .costs2 .cost .res{font-size:52px}.flow .incident{flex-direction:column;gap:6px}
+.q4{display:grid;grid-template-columns:1fr 1fr;gap:24px;flex:1;min-height:0;align-content:center}
+.q4c{background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:36px 40px;display:flex;flex-direction:column;gap:20px;min-width:0}
+.q4c .hd{display:flex;justify-content:space-between;align-items:center;gap:16px}
+.q4c h3{font-size:52px;letter-spacing:-.03em;line-height:1}
+.q4c .pct{font-family:var(--f-display);font-weight:800;font-size:150px;line-height:.85;letter-spacing:-.05em;color:var(--accent);font-variant-numeric:tabular-nums}
+.q4c .pct small{font-size:.4em;letter-spacing:-.01em}
+.q4bar{height:18px;border-radius:9px;background:var(--sunk);overflow:hidden}
+.q4bar b{display:block;height:100%;border-radius:9px;background:linear-gradient(90deg,var(--accent),var(--accent-2));transform-origin:left}
+.slide .q4bar b{animation:gx 1.4s var(--ease) both;animation-delay:calc(var(--d) * 90ms + 450ms)}
+.q4c p{font-size:19px;color:var(--muted)}
+.flow .q4{grid-template-columns:1fr}.flow .q4c{padding:24px}.flow .q4c h3{font-size:34px}.flow .q4c .pct{font-size:84px}
+.tops{display:flex;flex-direction:column;gap:12px;flex:1;justify-content:center}
+.ta{display:grid;grid-template-columns:150px 1fr 36px;gap:14px;align-items:center;font-size:17px;font-weight:600}
+.ta .bar{height:20px;border-radius:6px;background:var(--sunk);position:relative;overflow:hidden}
+.ta .bar b{position:absolute;inset:0 auto 0 0;border-radius:6px;background:linear-gradient(90deg,var(--accent),var(--accent-2));transform-origin:left}
+.slide .ta .bar b{animation:gx .9s var(--ease) both;animation-delay:calc(var(--i) * 80ms + 500ms)}
+.ta .n{font-family:var(--f-display);font-weight:800;font-size:22px;text-align:right;font-variant-numeric:tabular-nums}
+.flow .ta{grid-template-columns:110px 1fr 30px}
+
+.segbar{display:grid;grid-template-columns:repeat(14,1fr);gap:6px;height:16px;flex:none}
+.segbar i{border-radius:5px;transform-origin:left}
+.slide .segbar i{animation:pop .45s var(--spring) both;animation-delay:calc(var(--i) * 50ms + 300ms)}
+.board{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:16px;flex:1;min-height:0}
+.bcol{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px 20px 16px;display:flex;flex-direction:column;gap:10px;min-width:0;border-top:5px solid var(--c)}
+.slide .bcol{animation:up .6s var(--ease) both;animation-delay:calc(var(--i) * 110ms + 400ms)}
+.bcol .hd{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.bcol .big{font-family:var(--f-display);font-size:48px;font-weight:800;line-height:.9;color:var(--c)}
+.bcol .why{font-size:14.5px;color:var(--muted);line-height:1.35}
+.bcol ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.bcol li{display:flex;justify-content:space-between;align-items:baseline;gap:8px;border-top:1px solid var(--line);padding:8px 0;font-weight:600;font-size:16px}
+.bcol li span{font-family:var(--f-mono);font-weight:400;font-size:12px;color:var(--muted);text-align:right}
+.flow .board{grid-template-columns:1fr 1fr}
+@media (max-width:520px){.flow .board{grid-template-columns:1fr}}
+.chals{display:grid;grid-template-columns:1fr 1fr;gap:22px;flex:1;min-height:0}
+.chal{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:32px 34px;display:flex;flex-direction:column;gap:18px;min-width:0}
+.chal .ix{font-family:var(--f-display);font-weight:800;font-size:64px;line-height:.8;color:transparent;-webkit-text-stroke:1.5px var(--warn)}
+.chal h3{font-size:32px;letter-spacing:-.02em;line-height:1.1}
+.chal p{font-size:18px;color:var(--muted)}
+.flowbar{position:relative;display:flex;height:54px;margin-top:auto;margin-bottom:26px;border-radius:12px;background:var(--sunk)}
+.fb{width:var(--w);display:flex;align-items:center;padding:0 12px;overflow:hidden;transform-origin:left;flex:none}
+.fb em{font-style:normal;font-family:var(--f-mono);font-size:12px;white-space:nowrap;letter-spacing:.04em}
+.fb:first-child{border-radius:12px 0 0 12px}
+.fb.dev{background:var(--accent);color:var(--paper)}
+.fb.rev{background:var(--warn-soft);color:var(--warn)}
+.fb.wait{background:repeating-linear-gradient(135deg,var(--warn-soft) 0 8px,transparent 8px 16px);color:var(--warn)}
+.fb.ext{background:repeating-linear-gradient(135deg,var(--warn) 0 8px,var(--warn-soft) 8px 16px);color:var(--ink);border-radius:0 12px 12px 0}
+.fb.ext em{background:var(--surface);padding:2px 6px;border-radius:5px}
+.chal .flowbar .fb:last-of-type{border-radius:0 12px 12px 0}
+.slide .fb{animation:gx .8s var(--ease) both}
+.slide .fb:nth-child(2){animation-delay:.7s}.slide .fb:nth-child(3){animation-delay:1.2s}.slide .fb:nth-child(1){animation-delay:.3s}
+.slide .fb.ext{animation:gx 1.4s var(--ease) both 1.2s}
+.plan{position:absolute;top:-6px;bottom:-26px;width:2px;background:var(--ink)}
+.plan em{position:absolute;bottom:0;left:6px;font-style:normal;font-family:var(--f-mono);font-size:11px;color:var(--ink);white-space:nowrap;text-transform:uppercase;letter-spacing:.06em}
+.slide .plan{animation:up .5s var(--ease) both 1.9s}
+.flow .chals{grid-template-columns:1fr}
+.outl{display:grid;grid-template-columns:.9fr 1.1fr;gap:24px;flex:1;min-height:0}
+.ofx{display:flex;flex-direction:column;gap:18px;justify-content:center}
+.orow{display:grid;grid-template-columns:200px 34px 1fr;gap:14px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:24px 26px}
+.orow .k{font-family:var(--f-display);font-weight:700;font-size:24px;line-height:1.1}
+.orow .arrow{font-size:28px;color:var(--muted)}
+.orow div{display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+.orow p{font-size:16px;color:var(--muted)}
+.aiflow{padding:28px 30px;gap:18px}
+.aiflow h3{font-size:26px}
+.aisteps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;position:relative}
+.ais{background:var(--sunk);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:6px;position:relative}
+.slide .ais{animation:up .55s var(--ease) both;animation-delay:calc(var(--i) * 180ms + 550ms)}
+.ais:not(:last-child)::after{content:"→";position:absolute;right:-13px;top:50%;transform:translateY(-50%);font-size:18px;color:var(--accent);z-index:1}
+.ais i{font-style:normal;font-family:var(--f-mono);font-size:13px;color:var(--accent)}
+.ais b{font-family:var(--f-display);font-size:20px;font-weight:700;line-height:1.15}
+.ais span{font-size:14.5px;color:var(--muted)}
+.ais.out{background:var(--accent-soft)}
+.gapnote{display:flex;gap:16px;align-items:baseline;padding:16px 18px;border-radius:14px;background:var(--warn-soft);font-size:16px}
+.gapnote b{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--warn);white-space:nowrap;font-weight:500}
+.flow .outl,.flow .aisteps{grid-template-columns:1fr}.flow .orow{grid-template-columns:1fr}.flow .orow .arrow{display:none}.flow .ais::after{display:none}.flow .gapnote{flex-direction:column;gap:6px}
+
+.rgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;flex:1;min-height:0}
+.rc{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:22px 24px 18px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.slide .rc{animation:up .6s var(--ease) both;animation-delay:calc(var(--i) * 140ms + 250ms)}
+.rc .hd{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.rc h3{font-size:25px;letter-spacing:-.02em;white-space:nowrap}
+.rrows{flex:1;display:flex;flex-direction:column;justify-content:flex-start;gap:22px;padding-top:6px}
+.rc .delta{font-family:var(--f-display);font-weight:800;font-size:64px;line-height:.9;letter-spacing:-.035em;color:var(--accent);display:flex;flex-direction:column;gap:6px;white-space:nowrap}
+.rc .delta small{font-family:var(--f-mono);font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.rrow{display:flex;flex-direction:column;gap:7px}
+.rrow .lab{display:flex;justify-content:space-between;gap:8px;font-size:15px;color:var(--muted)}
+.rrow .lab b{font-family:var(--f-mono);font-weight:500;color:var(--ink);font-variant-numeric:tabular-nums}
+.rtrack{position:relative;height:20px;border-radius:10px;background:var(--sunk)}
+.rtrack .goal{position:absolute;top:-5px;bottom:-5px;width:0;border-left:2px dashed var(--warn)}
+.rtrack .seg{position:absolute;top:8px;height:4px;border-radius:2px;background:var(--accent);transform-origin:left}
+.slide .rtrack .seg{animation:gx .9s var(--ease) both;animation-delay:calc(var(--i) * 140ms + var(--k) * 120ms + 650ms)}
+.rtrack .pt{position:absolute;top:50%;width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:50%;border:2px solid var(--surface)}
+.rtrack .pt.b{background:var(--muted)}
+.rtrack .pt.a{background:var(--accent);box-shadow:0 0 0 1.5px var(--accent)}
+.slide .rtrack .pt.a{animation:pop .5s var(--spring) both;animation-delay:calc(var(--i) * 140ms + var(--k) * 120ms + 1.3s)}
+.rtrack .band{position:absolute;top:2px;bottom:2px;border-radius:8px;background:var(--accent-soft);border:1.5px solid var(--accent);transform-origin:center}
+.slide .rtrack .band{animation:gx .7s var(--ease) both;animation-delay:calc(var(--i) * 140ms + var(--k) * 120ms + 650ms)}
+.rc .axis{position:relative;height:26px;font-family:var(--f-mono);font-size:11px;color:var(--muted);margin-top:auto;border-top:1px dashed var(--line)}
+.rc .axis span{position:absolute;top:8px;transform:translateX(-50%)}
+.rc .axis span:first-child{transform:none}.rc .axis span:last-child{transform:translateX(-100%)}
+.rrow.none .lab b{color:var(--muted);font-weight:400}
+.rrow.none .rtrack{background:repeating-linear-gradient(135deg,var(--sunk) 0 6px,transparent 6px 12px);border:1px solid var(--line)}
+.goalbar{display:flex;gap:24px;align-items:center;padding:18px 26px;border-radius:18px;background:var(--accent-soft)}
+.goalbar b{font-family:var(--f-display);font-weight:800;font-size:52px;line-height:.9;color:var(--accent);letter-spacing:-.03em}
+.goalbar span{font-size:17px}
+.goalbar .scale{margin-left:auto;font-family:var(--f-mono);font-size:12px;color:var(--muted);display:flex;align-items:center;gap:8px;white-space:nowrap}
+.goalbar .scale i{width:0;height:16px;border-left:2px dashed var(--warn)}
+.flow .rgrid{grid-template-columns:1fr 1fr}
+@media (max-width:520px){.flow .rgrid{grid-template-columns:1fr}}
+.flow .goalbar{flex-direction:column;align-items:flex-start;gap:8px}.flow .goalbar .scale{margin-left:0;white-space:normal}
+
+/* ===== platform ===== */
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;flex:1;min-height:0}
+.trio .card{padding:24px 26px;gap:12px}
+.trio3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;flex:none}
+.t3{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px 22px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.t3 .hd{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.t3 h3{font-size:22px}
+.t3 p{font-size:15px;color:var(--muted)}
+.t3 .pipe{font-size:12px;gap:5px;flex-wrap:nowrap}.t3 .pipe span{padding:4px 7px;white-space:nowrap}
+.flow .trio3{grid-template-columns:1fr}
+.trio h3{font-size:30px;letter-spacing:-.02em}
+ul.dash{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;font-size:17px}
+ul.dash li{padding-left:20px;position:relative}
+ul.dash li::before{content:"";position:absolute;left:0;top:.66em;width:10px;height:2px;background:var(--accent)}
+.slide ul.dash li{animation:up .5s var(--ease) both;animation-delay:calc(var(--i) * 70ms + 450ms)}
+.flowmini{display:flex;flex-direction:column;gap:10px}
+.flowmini div{display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:12px;background:var(--sunk);font-weight:600}
+.slide .flowmini div{animation:up .5s var(--ease) both;animation-delay:calc(var(--i) * 120ms + 550ms)}
+.flowmini div i{font-style:normal;font-family:var(--f-mono);font-size:13px;color:var(--accent);font-weight:500}
+.ring{width:150px;height:150px;flex:none}
+.ring circle{fill:none;stroke-width:14}
+.ring .bg{stroke:var(--sunk)}
+.ring .fg{stroke:var(--accent);stroke-linecap:round;transform:rotate(-90deg);transform-origin:50% 50%}
+.slide .ring .fg{animation:ringfill 1.6s var(--ease) both .5s}
+.ring text{fill:var(--ink);font-family:var(--f-display);font-weight:800;font-size:34px}
+.ringrow{display:flex;gap:22px;align-items:center}
+.integr{display:flex;flex-direction:column;gap:8px}
+.integr span{font-family:var(--f-mono);font-size:14px;padding:7px 12px;border-radius:9px;border:1px solid var(--line)}
+.slide .integr span{animation:pop .45s var(--spring) both;animation-delay:calc(var(--i) * 110ms + 800ms)}
+
+/* ===== volume booster ===== */
+.vb{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;flex:1;min-height:0}
+.lane{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:24px 22px;display:flex;flex-direction:column;gap:14px;min-width:0;position:relative;overflow:hidden}
+.lane::before{content:"";position:absolute;left:0;right:0;top:0;height:6px;background:var(--accent);opacity:calc(.35 + var(--n) * .16);transform-origin:left}
+.slide .lane::before{animation:gx .8s var(--ease) both;animation-delay:calc(var(--n) * 110ms + 300ms)}
+.lane .k{font-family:var(--f-mono);font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--accent)}
+.lane h3{font-size:26px}
+.lane ul{margin:0;padding:0 0 0 18px;font-size:16px;display:flex;flex-direction:column;gap:6px;color:var(--muted)}
+.icons{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:auto}
+.icons i{aspect-ratio:1;border-radius:28%;display:grid;place-items:center;font-style:normal;font-family:var(--f-mono);font-size:11px;color:var(--paper);background:var(--accent);opacity:calc(.45 + var(--n) * .055)}
+.slide .icons i{animation:pop .45s var(--spring) both;animation-delay:calc(var(--n) * 60ms + 900ms)}
+.design{display:flex;gap:20px;align-items:baseline;font-size:17px;border-top:1px solid var(--line);padding-top:16px}
+.design b{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);white-space:nowrap;font-weight:500}
+
+/* ===== leadership ===== */
+.lgrid{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:1fr;gap:18px;flex:1;min-height:0}
+.lcard{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:24px 26px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.lcard .k{font-family:var(--f-mono);font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--accent)}
+.lcard h3{font-size:26px}
+.lcard p{font-size:16px;color:var(--muted)}
+.pipe{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-family:var(--f-mono);font-size:13px}
+.pipe span{padding:5px 10px;border-radius:8px;background:var(--accent-soft);color:var(--accent)}
+.slide .pipe span{animation:pop .45s var(--spring) both;animation-delay:calc(var(--i) * 150ms + 700ms)}
+.pipe em{font-style:normal;color:var(--muted)}
+
+/* ===== scorecard ===== */
+.sc2{display:grid;grid-template-columns:1.55fr 1fr;gap:24px;flex:1;min-height:0}
+.score{width:100%;border-collapse:collapse;font-size:16px}
+.score th{text-align:left;font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:500;padding:0 14px 10px 0;border-bottom:2px solid var(--ink)}
+.score td{padding:8.5px 14px 8.5px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.slide .score tbody tr{animation:up .45s var(--ease) both;animation-delay:calc(var(--i) * 45ms + 300ms)}
+.score td:first-child{font-weight:600;white-space:nowrap}
+.score td:last-child{color:var(--muted)}
+.tblwrap{overflow:auto;min-height:0}
+.excl{display:flex;flex-direction:column}
+.excl div{display:flex;gap:14px;align-items:baseline;font-size:17px;color:var(--muted);padding:12px 0;border-top:1px solid var(--line)}
+.slide .excl div{animation:up .45s var(--ease) both;animation-delay:calc(var(--i) * 70ms + 500ms)}
+.excl div::before{content:"✕";color:var(--gap);font-family:var(--f-mono);font-size:14px}
+.excl div:first-child{border-top:0}
+
+/* ===== open items ===== */
+.open{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.oi{display:grid;grid-template-columns:56px 220px 1fr auto;gap:24px;padding:20px 28px;border-top:1px solid var(--line);align-items:center;transition:background .2s}
+.oi:hover{background:var(--sunk)}
+.slide .oi{animation:up .5s var(--ease) both;animation-delay:calc(var(--i) * 80ms + 300ms)}
+.oi:first-child{border-top:0}
+.oi .ix{font-family:var(--f-mono);font-size:14px;color:var(--muted)}
+.oi .who{font-family:var(--f-display);font-weight:700;font-size:21px}
+.oi .what{font-size:18px}
+
+/* ===== close ===== */
+.close .wrap{flex:1;display:flex;flex-direction:column;justify-content:center;gap:28px}
+.close h1 .ln{display:block;overflow:hidden;padding-bottom:.06em}.close h1 .ln > span{display:inline-block}
+.slide.close h1 .ln > span{animation:rise 1s var(--ease) both .15s}
+.close h1{font-size:220px;line-height:.86;font-weight:800;letter-spacing:-.045em}
+.close .lede{color:var(--hero-muted);margin-top:20px}
+.src{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.srcc{border-top:1px solid var(--hero-line);padding-top:18px;display:flex;flex-direction:column;gap:8px}
+.srcc h3{font-size:22px;color:var(--hero-acc)}
+.srcc p{font-size:16px;color:var(--hero-muted)}
+.srcc code{font-family:var(--f-mono);font-size:14px;color:var(--hero-ink)}
+
+/* ===== chrome ===== */
+.progress{position:fixed;left:0;right:0;top:0;height:3px;z-index:5}
+.progress b{display:block;height:100%;width:0;background:var(--accent);transition:width .6s var(--ease)}
+.pill{position:fixed;right:20px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:6;display:flex;align-items:center;gap:4px;padding:5px;border-radius:999px;background:var(--surface);border:1px solid var(--line);box-shadow:0 10px 30px -12px rgba(0,0,0,.35);opacity:.6;transition:opacity .2s}
+.pill:hover,.pill:focus-within{opacity:1}
+.pill button{height:36px;min-width:36px;padding:0 10px;border:0;border-radius:999px;background:transparent;cursor:pointer;font-size:14px;color:var(--muted);display:grid;place-items:center}
+.pill button:hover{background:var(--sunk);color:var(--ink)}
+.pill button:disabled{opacity:.3;cursor:default;background:transparent}
+.pill .nav{font-size:20px;color:var(--ink)}
+.pill .count{font-family:var(--f-mono);font-size:13px;color:var(--ink);padding:0 8px;font-variant-numeric:tabular-nums;min-width:72px;text-align:center}
+.pill .sep{width:1px;height:20px;background:var(--line);margin:0 4px}
+.overview{position:fixed;inset:0;background:var(--paper);z-index:20;overflow-y:auto;padding:28px clamp(16px,4vw,56px) 56px}
+.overview .ohd{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;gap:12px}
+.overview .ohd h2{font-size:34px}
+.ogrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+.ocard{aspect-ratio:16/9;border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:16px;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:6px;max-width:100%;animation:up .4s var(--ease) both;animation-delay:calc(var(--i) * 25ms)}
+.ocard.h{background:var(--hero);color:var(--hero-ink);border-color:var(--hero)}
+.ocard:hover,.ocard.cur{outline:3px solid var(--accent);outline-offset:2px}
+.ocard .on{font-family:var(--f-mono);font-size:12px;opacity:.6}
+.ocard .ot{font-family:var(--f-display);font-weight:700;font-size:20px;line-height:1.1}
+.ocard .os{font-size:12px;font-family:var(--f-mono);margin-top:auto;opacity:.7;text-transform:uppercase;letter-spacing:.08em}
+.iconbtn{border:1px solid var(--line);background:var(--surface);border-radius:10px;height:38px;padding:0 14px;cursor:pointer;font-size:14px}
+
+.rail{position:fixed;right:18px;top:50%;transform:translateY(-50%);z-index:6;display:flex;flex-direction:column;gap:12px;padding:10px 6px;border-radius:999px;background:var(--surface);border:1px solid var(--line);box-shadow:0 10px 30px -14px rgba(0,0,0,.35)}
+.rail button{width:9px;height:9px;border-radius:50%;border:0;padding:0;background:var(--line);cursor:pointer;position:relative;transition:transform .25s var(--spring),background .25s}
+.rail button:hover{background:var(--muted)}
+.rail button.on{background:var(--accent);transform:scale(1.6)}
+.rail button span{position:absolute;right:22px;top:50%;transform:translateY(-50%) scale(.625);transform-origin:right center;white-space:nowrap;font-family:var(--f-mono);font-size:13px;color:var(--ink);background:var(--surface);border:1px solid var(--line);padding:5px 10px;border-radius:8px;opacity:0;pointer-events:none;transition:opacity .2s}
+.rail button:not(.on) span{transform:translateY(-50%)}
+.rail button:hover span,.rail button:focus-visible span{opacity:1}
+.cue{display:inline-flex;align-items:center;gap:8px}
+.cue i{font-style:normal;display:inline-block;animation:bob 1.6s ease-in-out infinite}
+@keyframes bob{50%{translate:0 5px}}
+.flow .rail{display:none}
+
+/* ===== flow mode (narrow screens): slides become scrolling pages ===== */
+.flow body{font-size:16px}
+.flow .viewport{scroll-snap-type:none}
+.flow .panel{height:auto}
+.flow .slide{position:relative;left:auto;top:auto;width:auto;height:auto;min-height:100vh;transform:none;opacity:1;border-radius:0;box-shadow:none;padding:28px 16px 48px;gap:24px;overflow:hidden}
+.flow .sf{position:static;margin-top:8px}
+.flow h2{font-size:34px}.flow h3{font-size:20px}
+.flow .sh{flex-direction:column;align-items:flex-start;gap:12px}.flow .sh .r{font-size:16px}
+.flow .lede{font-size:17px}
+.flow .body{flex:none}
+.flow .cover,.flow .gl2,.flow .asl,.flow .explorer,.flow .aside,.flow .pbp,.flow .sc2{grid-template-columns:1fr}
+.flow .cover h1,.flow .close h1{font-size:64px}
+.flow .cmeta{flex-wrap:wrap;gap:16px 28px}
+.flow .log{height:300px;flex:none}
+.flow .divider .wrap{grid-template-columns:1fr;gap:16px}
+.flow .divider .num{font-size:120px}.flow .divider h1{font-size:52px}
+.flow .kpis{grid-template-columns:1fr 1fr}
+.flow .kpi{padding:16px 12px 16px 0}.flow .kpi + .kpi{padding-left:12px}.flow .kpi:nth-child(3){padding-left:0;border-left:0;border-top:1px solid var(--line)}.flow .kpi:nth-child(4){border-top:1px solid var(--line)}
+.flow .kpi .n{font-size:56px}
+.flow .wins{grid-template-columns:1fr}
+.flow .rules,.flow .gaps,.flow .costs,.flow .trio,.flow .lgrid,.flow .src{grid-template-columns:1fr}
+.flow .tgrid,.flow .vb,.flow .assess{grid-template-columns:1fr 1fr}
+@media (max-width:520px){.flow .tgrid,.flow .vb,.flow .assess{grid-template-columns:1fr}}
+.flow .rule .eq .a,.flow .rule .eq .b{font-size:24px}
+.flow .th{grid-template-columns:1fr 50px;gap:8px 12px}.flow .th .bar{grid-column:1/-1;grid-row:2}
+.flow .applist{flex-direction:row;overflow-x:auto;padding-bottom:6px}
+.flow .donut{width:260px;height:260px}
+.flow .costtop{grid-template-columns:1fr;gap:12px}.flow .costtop .big{font-size:56px}
+.flow .oi{grid-template-columns:1fr;gap:6px;padding:16px 18px}
+.flow .tl-detail{grid-template-columns:1fr}.flow .tl-detail .when{grid-row:auto}
+.flow .scroll{overflow:visible}
+.flow .pill{left:16px;right:16px;justify-content:space-between;opacity:1}
+.flow .pill .opt{display:none}
+
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="progress"><b id="bar"></b></div>
+<div class="viewport" id="viewport">
+<main class="canvas" id="canvas">
+
+<!-- 1 COVER -->
+<section class="slide hero active" data-title="Android Team Q3 Report" data-sec="Cover">
+  <div class="cover">
+    <div class="l">
+      <div class="eyebrow" data-a style="--d:0">Q3 2026 <span>· Engineering review</span></div>
+      <h1><span class="ln"><span>Android Team</span></span><span class="ln"><span><em>Q3</em> Report</span></span></h1>
+      <p class="lede" data-a style="--d:3">Delivery against the <strong>Q3 target apps</strong> and every Android production release posted to #app-builds across <strong>20 apps</strong>.</p>
+      <dl class="cmeta" data-a style="--d:4">
+        <div><dt>Prepared by</dt><dd>Android Tech Lead</dd></div>
+        <div><dt>Production releases</dt><dd>45 in Q3</dd></div>
+        <div><dt>Apps shipped</dt><dd>20 in Q3</dd></div>
+      </dl>
+    </div>
+    <div class="log" data-a style="--d:3" aria-label="All Android production releases posted to #app-builds in Q3">
+      <div class="lh"><span>#app-builds · Android</span><b>45 releases</b></div>
+      <div class="win"><div class="reel" id="reel"></div></div>
+    </div>
+  </div>
+  <div class="barcode" id="barcode" aria-hidden="true"></div>
+  <div class="sf"><span>Android Engineering · Q3 2026</span><span class="grow"></span><span class="cue">Scroll to begin <i>↓</i></span></div>
+</section>
+
+<!-- 2 GLANCE -->
+<section class="slide" data-title="Q3 at a glance" data-sec="Overview">
+  <div class="sh"><div class="l"><div class="eyebrow">Overview</div><h2>Q3 at a glance</h2></div><p class="r">A production release roughly every other day. <strong>10 of 12</strong> Android target apps completed in Q3, including full revamps of PBP and AI Keyboard.</p></div>
+  <div class="kpis" data-a style="--d:1">
+    <div class="kpi"><div class="n"><span data-count="45">45</span></div><div class="l">Production releases</div><div class="dd">Posted to #app-builds in Q3</div></div>
+    <div class="kpi"><div class="n"><span data-count="20">20</span></div><div class="l">Android apps shipped</div><div class="dd">12 target apps and 8 others</div></div>
+    <div class="kpi"><div class="n"><span data-count="10">10</span><small>/12</small></div><div class="l">Android target apps completed</div><div class="dd">ePrint and NoteQA carried forward</div></div>
+    <div class="kpi"><div class="n"><span data-count="33">33</span></div><div class="l">Releases on target apps</div><div class="dd">12 more across 8 other apps</div></div>
+  </div>
+  <div class="gl2" data-a style="--d:2">
+    <div class="card"><div style="display:flex;justify-content:space-between;align-items:baseline"><h3>Production releases per month</h3><span class="small">August was the busiest</span></div><div class="mbars" id="monthBars"></div></div>
+    <div class="card"><div style="display:flex;justify-content:space-between;align-items:baseline"><h3>Most releases in Q3</h3><span class="small">Top six apps</span></div><div class="tops" id="topApps"></div></div>
+  </div>
+  <div class="sf"><span>Android Engineering · Q3 2026</span><span class="grow"></span><span>Overview</span></div>
+</section>
+
+<!-- 7 STATUS -->
+<section class="slide" data-title="Target-app status" data-sec="Delivery">
+  <div class="sh"><div class="l"><div class="eyebrow">Delivery · 14 Q3 target apps</div><h2>Where each target app landed</h2></div><p class="r">12 target apps stayed with the Android team: <strong>10 completed</strong> and 2 carried forward. Upkee and FM Radio moved to iOS devs as part of the Product Engineering revamp.</p></div>
+  <div class="segbar" id="segbar" data-a style="--d:1" role="img" aria-label="14 target apps: 8 completed, 2 completed as full revamps, 2 carried into Q4, 2 moved to iOS devs"></div>
+  <div class="board" id="board"></div>
+  <div class="sf"><span>Android Engineering · Q3 2026</span><span class="grow"></span><span>Delivery</span></div>
+</section>
+
+<!-- 8 OTHER APPS -->
+<section class="slide" data-title="Beyond the target apps" data-sec="Portfolio" style="gap:28px">
+  <div class="sh"><div class="l"><div class="eyebrow">Portfolio</div><h2>Beyond the target apps</h2></div><p class="r"><strong>12 more production releases</strong> across 8 Android apps that were not Q3 target apps.</p></div>
+  <div class="others" id="others"></div>
+  <div class="sf"><span>Android Engineering · Q3 2026</span><span class="grow"></span><span>Portfolio</span></div>
+</section>
+
+<!-- 10 EXPLORER -->
+<section class="slide" data-title="App-by-app records" data-sec="Delivery">
+  <div class="sh"><div class="l"><div class="eyebrow">Project records</div><h2>App-by-app records</h2></div><p class="r">Pick any of the 20 apps to see its Q3 target next to every production release.</p></div>
+  <div class="explorer" data-a style="--d:1">
+    <div class="applist" id="appList" role="tablist" aria-label="Apps"></div>
+    <div class="appview" id="appView" role="tabpanel"></div>
+  </div>
+  <div class="sf"><span>Android Engineering · Q3 2026</span><span class="grow"></span><span>Delivery</span></div>
+</section>
+
+<!-- CHALLENGES -->
+<section class="slide" data-title="Major challenges" data-sec="Challenges">
+  <div class="sh"><div class="l"><div class="eyebrow">Challenges</div><h2>What stretched the timelines</h2></div><p class="r">The two biggest delays sat outside development: waiting on product review and waiting on design.</p></div>
+  <div class="chals">
+    <div class="chal lift" data-a style="--d:1">
+      <span class="ix">01</span>
+      <h3>Apps stayed in product review, and reviews kept extending</h3>
+      <p>Builds that were ready from engineering waited in product review. Each review round added changes, which pushed the release date further out.</p>
+      <div class="flowbar" aria-hidden="true">
+        <span class="fb dev" style="--w:42%"><em>Development</em></span>
+        <span class="fb rev" style="--w:22%"><em>Product review</em></span>
+        <span class="fb ext" style="--w:26%"><em>Extended</em></span>
+        <span class="plan" style="left:64%"><em>Planned release</em></span>
+      </div>
+    </div>
+    <div class="chal lift" data-a style="--d:2">
+      <span class="ix">02</span>
+      <h3>Design dependency held up the start and the middle of a build</h3>
+      <p>Waiting for design clearance, then taking up design-review tasks, used timeline that would otherwise have gone to development.</p>
+      <div class="flowbar" aria-hidden="true">
+        <span class="fb wait" style="--w:24%"><em>Design clearance</em></span>
+        <span class="fb rev" style="--w:20%"><em>Design review</em></span>
+        <span class="fb dev" style="--w:46%"><em>Development</em></span>
+        <span class="plan" style="left:44%"><em>Planned dev start</em></span>
+      </div>
+    </div>
+  </div>
+  <p class="small" data-a style="--d:4">Bars show where the time went, not measured durations.</p>
+  <div class="sf"><span>Android Engineering · Q3 2026</span><span class="grow"></span><span>Challenges</span></div>
+</section>
+
+<!-- OUTLOOK -->
+<section class="slide" data-title="Product Engineering and AI design" data-sec="Outlook">
+  <div class="sh"><div class="l"><div class="eyebrow">Outlook</div><h2>Product Engineering removes most of the wait. Design stays the blocker.</h2></div></div>
+  <div class="outl">
+    <div class="ofx">
+      <div class="orow lift" data-a style="--d:1"><span class="k">Product review delays</span><span class="arrow">→</span><div><span class="chip c-strong">Significantly reduced</span><p>Product Engineers own the product decisions, so fewer builds wait on a separate review loop.</p></div></div>
+      <div class="orow lift" data-a style="--d:2"><span class="k">Design dependency</span><span class="arrow">→</span><div><span class="chip c-risk">Still a blocker</span><p>Reduced by AI-assisted design, but it remains the main constraint on timelines.</p></div></div>
+    </div>
+    <div class="aiflow card" data-a style="--d:3">
+      <h3>How AI-assisted design works today</h3>
+      <div class="aisteps">
+        <div class="ais" style="--i:0"><i>1</i><b>Developer context</b><span>Existing theme, flows, UX research and resources</span></div>
+        <div class="ais" style="--i:1"><i>2</i><b>Figma MCP + Claude</b><span>Generates the design from that context</span></div>
+        <div class="ais out" style="--i:2"><i>3</i><b>Designs in Figma</b><span>App flows on the existing theme, already in use. New apps from scratch are possible.</span></div>
+      </div>
+      <div class="gapnote"><b>Main gap</b><span>Asset discovery. UX can be researched and handed to the AI; finding the right assets is what still needs a person. Output quality depends on the context and resources the developer provides.</span></div>
+    </div>
+  </div>
+  <div class="sf"><span>Android Engineering · Q3 2026</span><span class="grow"></span><span>Outlook</span></div>
+</section>
+
+<!-- COST -->
+<section class="slide" data-title="Cost optimisation" data-sec="Cost">
+  <div class="sh"><div class="l"><div class="eyebrow">Cost optimisation</div><h2>Lower running costs on Keto and ID Photo</h2></div><p class="r">Two optimisations that cut ongoing database and AI costs.</p></div>
+  <div class="costs2">
+    <div class="cost lift" data-a style="--d:1"><h3>Keto</h3><div class="res">−<span data-count="70">70</span>%</div>
+      <div class="cbar"><span class="k">Before</span><span class="v">100%</span><span class="t"><b style="width:100%"></b></span></div>
+      <div class="cbar"><span class="k">After</span><span class="v">~30%</span><span class="t"><b class="after" style="width:30%"></b></span></div>
+      <p>Firestore index size and read/write costs cut by about 70%. A ₹14K credit was secured, with major help from Navfal on the communication. Ongoing cost is estimated at ₹12–13K a month.</p></div>
+    <div class="cost lift" data-a style="--d:2"><h3>ID Photo</h3><div class="res">−<span data-count="49">49</span>%</div>
+      <div class="cbar"><span class="k">Gemini</span><span class="v">100%</span><span class="t"><b style="width:100%"></b></span></div>
+      <div class="cbar"><span class="k">Grok</span><span class="v">~51%</span><span class="t"><b class="after" style="width:51%"></b></span></div>
+      <p>AI provider costs compared, then image generation moved from Gemini to Grok for about 49% lower cost.</p></div>
+  </div>
+  <div class="incident" data-a style="--d:4"><b>Idle resources shut down</b><span>Unused cloud instances on FM Radio and NoteQA were identified and switched off, ending that spend.</span></div>
+  <div class="insight" data-a style="--d:5"><b>Insight</b><span>Search grounding queries can cost far more than model tokens. AI choices are now judged on query cost and scalability, not token price alone.</span></div>
+  <div class="sf"><span>Android Engineering · Q3 2026</span><span class="grow"></span><span>Cost</span></div>
+</section>
+
+<!-- 14 PLATFORM -->
+<section class="slide" data-title="Platform and engineering work" data-sec="Platform" style="gap:28px">
+  <div class="sh"><div class="l"><div class="eyebrow">Platform & engineering</div><h2>Safer AI services, better tooling, clearer process</h2></div></div>
+  <div class="trio">
+    <div class="card lift" data-a style="--d:1"><span class="chip c-strong" style="align-self:flex-start">Delivered</span><h3>Security hardening</h3>
+      <ul class="dash"><li style="--i:0">Post-incident hardening of AI and Firebase services</li><li style="--i:1">App Check adoption for AI services</li><li style="--i:2">Named owners and access rules for credentials and API keys</li><li style="--i:3">Security requirements for paid AI services and new integrations</li><li style="--i:4">Escalation after the Google/Gemini billing-security incident</li></ul></div>
+    <div class="card lift" data-a style="--d:2"><span class="chip c-strong" style="align-self:flex-start">Completed 26 Sep</span><h3>AI-first Android architecture</h3>
+      <p class="small" style="font-size:17px">Defines where AI fits in Android development, across three layers:</p>
+      <div class="flowmini"><div style="--i:0"><i>01</i>Analytics events</div><div style="--i:1"><i>02</i>Backend</div><div style="--i:2"><i>03</i>Firebase services</div></div></div>
+    <div class="card lift" data-a style="--d:3"><span class="chip c-moderate" style="align-self:flex-start">In progress</span><h3>Android MCP</h3>
+      <div class="ringrow"><svg class="ring" viewBox="0 0 150 150" role="img" aria-label="90 percent complete"><circle class="bg" cx="75" cy="75" r="62"/><circle class="fg" cx="75" cy="75" r="62" stroke-dasharray="389.56" stroke-dashoffset="38.96"/><text x="75" y="87" text-anchor="middle">90%</text></svg>
+        <div class="integr"><span style="--i:0">Qonversion</span><span style="--i:1">GA4</span><span style="--i:2">Play Console</span></div></div>
+      <p class="small" style="font-size:16px">Remaining: final rules, credential security and access control, optimisation.</p></div>
+  </div>
+  <div class="trio3">
+    <div class="t3 lift" data-a style="--d:4"><div class="hd"><h3>Structured hiring pipeline</h3><span class="chip c-strong">Delivered</span></div><div class="pipe"><span style="--i:0">Shortlist</span><em>→</em><span style="--i:1">Interview</span><em>→</em><span style="--i:2">Practical</span><em>→</em><span style="--i:3">Whiteboard</span></div></div>
+    <div class="t3 lift" data-a style="--d:5"><div class="hd"><h3>Vitals automation</h3><span class="chip c-strong">Delivered</span></div><p>Android Vitals reporting and its follow-up workflow automated.</p></div>
+    <div class="t3 lift" data-a style="--d:6"><div class="hd"><h3>Auto review, failproof</h3><span class="chip c-strong">Delivered</span></div><p>Failproof implementation of the automated app review and version workflow.</p></div>
+  </div>
+  <div class="sf"><span>Android Engineering · Q3 2026</span><span class="grow"></span><span>Platform</span></div>
+</section>
+
+<!-- RATINGS -->
+<section class="slide" data-title="Rating-review initiative" data-sec="Ratings" style="gap:28px">
+  <div class="sh"><div class="l"><div class="eyebrow">Initiative · rating-review placement</div><h2>Teaching the team where to ask for a rating</h2></div><p class="r">I piloted it on ID Photo, then team members rolled it out on their own apps. <strong>Ratings rose on every app so far.</strong></p></div>
+  <div class="rgrid" id="ratings"></div>
+  <div class="goalbar" data-a style="--d:6"><b>4.5+</b><span><strong>Internal goal:</strong> bring every one of the most active apps to a 4.5+ 28-day average rating, then keep raising it. ID Photo is there already.</span><span class="scale"><i></i>Goal line on every track · scale 3.5 to 5.0</span></div>
+  <div class="sf"><span>Android Engineering · Q3 2026</span><span class="grow"></span><span>Ratings</span></div>
+</section>
+
+<!-- 15 VOLUME BOOSTER -->
+<section class="slide" data-title="Volume Booster, end to end" data-sec="Product">
+  <div class="sh"><div class="l"><div class="eyebrow">Product engineering</div><h2>Volume Booster, owned end to end</h2></div><p class="r">One app taken through engineering, UX, monetisation, ASO and creative by a single owner.</p></div>
+  <div class="vb">
+    <div class="lane lift" style="--n:1;--d:1" data-a><span class="k">01 · Build</span><h3>Engineering</h3><ul><li>End-to-end development</li><li>Cleaner, booster and audio management</li></ul></div>
+    <div class="lane lift" style="--n:2;--d:2" data-a><span class="k">02 · Flow</span><h3>UX</h3><ul><li>Optimised onboarding</li><li>Permission and testing flows</li></ul></div>
+    <div class="lane lift" style="--n:3;--d:3" data-a><span class="k">03 · Revenue</span><h3>Monetisation</h3><ul><li>Ads placement strategy</li><li>Rating-review placement and design</li></ul></div>
+    <div class="lane lift" style="--n:4;--d:4" data-a><span class="k">04 · Store</span><h3>ASO</h3><ul><li>ASO preparation</li><li>Keyword-ranking tool research</li></ul></div>
+    <div class="lane lift" style="--n:5;--d:5" data-a><span class="k">05 · Brand</span><h3>Creative</h3><ul><li>Icon strategy</li><li>10 AI icon concepts for review</li></ul>
+      <div class="icons" aria-hidden="true"><i style="--n:1">1</i><i style="--n:2">2</i><i style="--n:3">3</i><i style="--n:4">4</i><i style="--n:5">5</i><i style="--n:6">6</i><i style="--n:7">7</i><i style="--n:8">8</i><i style="--n:9">9</i><i style="--n:10">10</i></div></div>
+  </div>
+  <div class="design" data-a style="--d:7"><b>Design</b><span>Designed with a Figma MCP + Claude workflow, shared for review on 25 Sep. Work is under way to give developers Figma access so they can use it too.</span></div>
+  <div class="sf"><span>Android Engineering · Q3 2026</span><span class="grow"></span><span>Product</span></div>
+</section>
+
+<!-- OPEN ITEMS -->
+<section class="slide" data-title="Open items into Q4" data-sec="Next">
+  <div class="sh"><div class="l"><div class="eyebrow">Carried forward</div><h2>Open items going into Q4</h2></div><p class="r">Two projects close to the finish line.</p></div>
+  <div class="q4">
+    <div class="q4c lift" data-a style="--d:1"><div class="hd"><h3>NoteQA</h3><span class="chip c-moderate">In progress</span></div><div class="pct"><span data-count="95">95</span><small>%</small></div><div class="q4bar"><b style="width:95%"></b></div><p>95% complete and carried into Q4.</p></div>
+    <div class="q4c lift" data-a style="--d:2"><div class="hd"><h3>ePrint</h3><span class="chip c-strong">Submission this week</span></div><div class="pct"><span data-count="98">98</span><small>%</small></div><div class="q4bar"><b style="width:98%"></b></div><p>Q3 scope moved to Q4. 98% complete and targeted for submission this week.</p></div>
+  </div>
+  <div class="sf"><span>Android Engineering · Q3 2026</span><span class="grow"></span><span>Next</span></div>
+</section>
+
+<!-- 20 CLOSE -->
+<section class="slide hero close" data-title="Thank you" data-sec="End">
+  <div class="wrap">
+    <div class="eyebrow" data-a style="--d:0">Q3 2026 <span>· Android Engineering</span></div>
+    <h1><span class="ln"><span>Thank you</span></span></h1>
+  </div>
+  <div class="sf"><span>Android Engineering · Q3 2026</span><span class="grow"></span><span>End</span></div>
+</section>
+
+</main>
+</div>
+
+<div class="pill" role="toolbar" aria-label="Slide controls">
+  <button class="nav" id="prev" aria-label="Previous section">↑</button>
+  <span class="count" id="count">01 / 13</span>
+  <button class="nav" id="next" aria-label="Next section">↓</button>
+  <span class="sep opt"></span>
+  <button class="opt" id="btnOverview" title="All slides (O)">Slides</button>
+  <button class="opt" id="btnTheme" title="Theme (T)">Theme</button>
+  <button class="opt" id="btnFull" title="Fullscreen (F)">Full</button>
+</div>
+
+<nav class="rail" id="rail" aria-label="Sections"></nav>
+
+<div class="overview" id="overview" hidden>
+  <div class="ohd"><h2>All slides</h2><button class="iconbtn" id="closeOv">Close · Esc</button></div>
+  <div class="ogrid" id="ogrid"></div>
+</div>
+
+<script>
+(function(){
+/* ================= DATA ================= */
+/* Source: #app-builds Android extraction, 1 Jul – 5 Oct 2026 (48 posts) */
+const RAW=[
+ ["2026-07-01","Locate Us","1.2.8",30,"Places API upgrade, Firebase crash fix"],
+ ["2026-07-01","Authenticator","3.2",49,"Backup, password manager/leak flows, autofill, website autodetection, UI, localisation, events, rating placements"],
+ ["2026-07-01","Snore","2.0.2",18,"Firebase crash resolution"],
+ ["2026-07-03","Keto","12.9.12",187,"Obfuscation, diary navigation, food filters, crash fixes, Insight revamp, meal-flow improvements, rating review, localisation, events"],
+ ["2026-07-06","Tap Share","1.4",10,"reCAPTCHA SDK issue fix"],
+ ["2026-07-09","Authenticator","3.2.2",53,"Internet crash fix, obfuscation, ~15 MB size reduction"],
+ ["2026-07-10","PureCheck","3.2",45,"Recommendation engine, home flow, search/filter, Cloudflare D1 indexing, AI/web lookup, blogs, search fallback"],
+ ["2026-07-10","Cleaner","1.2",6,"Functionality improvements, Firebase crash fix"],
+ ["2026-07-17","ID Photo","3.7",51,"Rating-review placement and prompt changes"],
+ ["2026-07-18","Upkee","1.0",60,"Onboarding profile setup, bug/design fixes, analytics, notification strategy, calendar/toast updates"],
+ ["2026-07-22","NoteQA","2.2",25,"Rating-review strategy"],
+ ["2026-07-23","Authenticator","3.2.4",55,"Widgets, onboarding assets/content, tag-managed biometric flow"],
+ ["2026-07-27","NoteQA","2.2",25,"Tag-managed sign-in, onboarding changes, rating-review strategy"],
+ ["2026-07-28","PureCheck","3.3",46,"Target SDK 36, Billing Library, rating strategy, custom analytics"],
+ ["2026-07-30","Captions","3.8.3",78,"Target SDK 36, Billing, Export Journey analytics, quality-aware compression"],
+ ["2026-08-01","App Blocker","2.2.6",28,"Rating-review strategy, removed Draw Overlay dependency"],
+ ["2026-08-01","ResumeIt","1.3.1",32,"ATS score, premium A/B test, events, Qonversion R&D, fixes"],
+ ["2026-08-05","Diet Plan","2.3",33,"SDK and Billing upgrades"],
+ ["2026-08-06","Captions","3.8.4",79,"Custom onboarding/rating analytics, new rating-review strategies"],
+ ["2026-08-12","Cleaner","1.3",7,"Rating review"],
+ ["2026-08-13","Fasting","6.6",76,"Rating frequency, Firestore-controlled frequency, rating events"],
+ ["2026-08-17","Cleaner","1.4",8,"Permission-string updates"],
+ ["2026-08-17","Captions","3.8.5",80,"Caption rendering/export improvements, multitasking during export, performance, onboarding simplification"],
+ ["2026-08-21","ePrint","2.8.1",69,"Lifetime purchase restore/backend, Gmail login, settings login, localisation"],
+ ["2026-08-21","Cleaner","1.6",10,"Duplicate contacts, calendar management, app manager, major UI revamp, removed QUERY_ALL_PACKAGES"],
+ ["2026-08-24","Keto","12.9.13",188,"Target SDK upgrade, backend lifetime restoration/sign-in, cross-account premium migration"],
+ ["2026-08-24","PureCheck","3.3.1",47,"first_open event"],
+ ["2026-08-25","App Blocker","2.2.7",29,"Billing Library 8, Target SDK 36, permission screen, tag-managed rating"],
+ ["2026-08-26","Caloric","1.2.4",26,"Firebase crash fixes, improvements, A/B premium change, Billing/SDK updates"],
+ ["2026-08-27","ID Photo","3.7.1",52,"New A/B onboarding, visa section, Grok image generation, lifetime restore testing, rating/premium changes, events"],
+ ["2026-08-27","Affirmation","2.9",36,"Target SDK/Billing, stability fixes, Media3, reminder reliability, security cleanup, ~35% app-size reduction"],
+ ["2026-08-31","Font Changer","7.8",83,"Target SDK/Billing, keyboard performance, privacy, Crashlytics fixes, security/lifecycle improvements, asset optimisation"],
+ ["2026-09-03","Fasting","6.7",77,"Rating strategy, Target SDK 36, UI fixes, latest Billing + Qonversion"],
+ ["2026-09-07","ePrint","2.8.3",72,"Firebase crash resolution"],
+ ["2026-09-10","ID Photo","3.7.2",55,"Android 10-and-lower drawable crash fix"],
+ ["2026-09-10","Cleaner","1.7",11,"Rating review"],
+ ["2026-09-15","App Blocker","2.2.8",32,"Permission-flow redesign for Draw Overlay, Usage Stats, Notifications, Accessibility"],
+ ["2026-09-15","Captions","3.9",81,"Major timeline/classic editor revamp, layers, undo/redo, video/music editing, premium A/B, Cloud Functions security, events/localisation"],
+ ["2026-09-15","PureCheck","3.4",48,"Legacy Cloud Functions moved to callable functions, Firebase App Check"],
+ ["2026-09-16","ResumeIt","1.3.2",34,"New rating-review strategy, events, live bug fixes"],
+ ["2026-09-23","Locate Us","1.3.1",33,"Onboarding revamp, chat, activity status, notification history, geofence/check-in, home/settings revamp, SOS, localisation"],
+ ["2026-09-23","Cleaner","1.9",13,"20-language localisation, new rating-review strategy"],
+ ["2026-09-23","App Blocker","2.3.0",34,"Crashlytics resolutions"],
+ ["2026-09-25","PBP","4.0",54,"Full app revamp: adult-content blocking, custom block screen, uninstall protection, PIN/App Lock, blogs, languages/themes, gambling/shopping blocking, reels/shorts blocking, accountability, panic mode, widget"],
+ ["2026-09-28","Diet Plan","2.4",34,"Firebase App Check, callable Cloud Functions, GPT-6 Luna integration, prompt optimisation"],
+ ["2026-09-29","AI Keyboard","1.3",8,"Full revamp, shipped as BetterType: localisation, final product changes, TFLite models, Firebase App Check + callable function"],
+ ["2026-10-02","Authenticator","3.2.6",57,"Events reset"],
+ ["2026-10-02","ID Photo","3.7.3",56,"Events reset, App Check for image generation"]
+];
+/* Q3 only; Upkee is not an Android project */
+const BUILDS=RAW.filter(b=>b[1]!=="Upkee"&&b[0]<="2026-09-30");
+const TARGETS=[
+ {name:"Captions",targets:[["Retention","Lower monthly cancellation"],["New-user-to-paid","≥ 4.4%"],["ARPPU","≥ $3.20"],["Organic share","grow from ~31%"]]},
+ {name:"Authenticator",targets:[["User-to-paid","1.58% → 2.5%"],["Listing conversion","hold ~51%"],["ARPPU","≥ $7"]]},
+ {name:"ePrint",note:"Q3 scope moved to Q4. 98% complete and targeted for submission this week.",targets:[["User-to-paid","~1.5% → 2.2%"],["Cancellation","26.4% → ~21%"],["Refund","≤ ~0.33%"],["ARPPU","≥ $6.50"],["Listing conv.","42.71% → 48%"],["Organic / mo","14,845 → 21,000"]]},
+ {name:"PBP",targets:[["User-to-paid","0.97% → 2.0%"],["Cancel / refund","hold"],["ARPPU","≥ $30"],["Listing conv.","~21% → 30%"]],
+  note:"Full app revamp released to production on 25 Sep."},
+ {name:"Fasting",targets:[["New-user-to-paid","0.74% → 1.3%"],["Cancellations","reduce"],["ARPPU","≥ $3.20"],["Listing conv.","23.89% → 32%"],["Visitors / mo","43,122 → 55–60K"]]},
+ {name:"ResumeIt",targets:[["New-user-to-paid","1.45% → 2.2%"],["Listing conv.","~21% → 30%"]]},
+ {name:"App Blocker",targets:[["New-user-to-paid","1.11% → 2.0%"],["ARPPU","≥ $18"],["Listing conv.","~29% → ~38%"],["Visitors","grow from ~34K"]]},
+ {name:"PureCheck",targets:[["New-user-to-paid","0.15% → 1.0%"],["ARPPU","≥ $19"],["Listing conv.","~35%"],["Paywall","confirm surfaced"]]},
+ {name:"Locate Us",targets:[]},
+ {name:"Cleaner",kind:"ASO only",targets:[["Tap rate","3.3% → ~5%"],["Install rate","46% → ~60%"]]},
+ {name:"NoteQA",kind:"Validation",targets:[["ARPPU","hold ~$34.98"],["Cohorts","establish"],["Listing","re-base"]],
+  note:"95% complete and carried into Q4. v2.2 · c25 was posted twice in July and counts once."},
+ {name:"AI Keyboard",kind:"Validation",targets:[["Conversion","lift from ~0.08%"],["Baseline","conversion + retention"],["Listing","re-base on niche"]],
+  note:"Full revamp released as BetterType 1.3 (8) on 29 Sep."}
+];
+const OTHER_NOTES={"Snore":"Firebase crash resolution","ID Photo":"A/B onboarding, visa section and Grok image generation","Keto":"Insight revamp, meal flow, then Target SDK and cross-account premium","Locate Us":"Onboarding revamp, chat, geofence check-in and SOS","Diet Plan":"Billing upgrade, then App Check and GPT-6 Luna","Upkee":"Onboarding profile setup, analytics, notifications","Tap Share":"reCAPTCHA SDK issue fixed","Caloric":"Crash fixes, A/B premium change, Billing/SDK","Affirmation":"Media3, stability fixes, ~35% smaller app","Font Changer":"Keyboard performance, privacy, Crashlytics fixes"};
+const STATUS={regular:["Completed","c-strong","var(--accent)"],revamp:["Completed · revamp","c-risk","var(--warn)"],carried:["Carried into Q4","c-moderate","var(--info)"],one:["Single update","c-neutral","var(--muted)"],ios:["Moved to iOS devs","c-ios","var(--plum)"],other:["Not a target app","c-neutral","var(--muted)"]};
+const CARRIED={"ePrint":"98% · submit this week","NoteQA":"95% complete"};
+const IOS=["Upkee","FM Radio"];
+const REVAMP=new Set(["PBP","AI Keyboard"]);
+const Q3END="2026-09-30";
+const inQ3=b=>b[0]<=Q3END;
+const mk=(name,extra)=>{const builds=BUILDS.filter(b=>b[1]===name);const q3=builds.filter(inQ3);const uniq=new Set(q3.map(b=>b[2]+"/"+b[3])).size;return Object.assign({name,builds,q3,uniq},extra)};
+const APPS=TARGETS.map(t=>{const a=mk(t.name,t);a.target=true;a.status=REVAMP.has(a.name)?"revamp":CARRIED[a.name]?"carried":a.uniq>=2?"regular":"one";return a});
+const tnames=new Set(TARGETS.map(t=>t.name));
+const OTHERS=[...new Set(BUILDS.map(b=>b[1]).filter(n=>!tnames.has(n)))].map(n=>{const a=mk(n,{});a.target=false;a.status="other";a.note=OTHER_NOTES[n];return a})
+  .sort((x,y)=>y.q3.length-x.q3.length||x.builds[0][0].localeCompare(y.builds[0][0]));
+const EVERY=[...APPS,...OTHERS];
+const DAY=864e5, START=Date.UTC(2026,6,1), END=Date.UTC(2026,9,1), SPAN=(END-START)/DAY;
+const pos=d=>((Date.parse(d+"T00:00:00Z")-START)/DAY/SPAN*100);
+const MN=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const fmt=d=>{const x=new Date(d+"T00:00:00Z");return x.getUTCDate()+" "+MN[x.getUTCMonth()]};
+const MONTHS=[["Jul","2026-07-01"],["Aug","2026-08-01"],["Sep","2026-09-01"]];
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const $=id=>document.getElementById(id);
+const sorted=[...BUILDS].sort((x,y)=>x[0].localeCompare(y[0]));
+const order=new Map(sorted.map((b,i)=>[b,i]));
+
+/* cover reel + barcode */
+const rows=sorted.map(b=>`<div class="row"><span class="d">${fmt(b[0])}</span><span class="a">${esc(b[1])}</span><span class="v">${b[2]} · c${b[3]}</span></div>`).join("");
+$("reel").innerHTML=rows+rows;
+$("barcode").innerHTML=MONTHS.map(([m,d],i)=>`<span class="mg" style="left:${pos(d)}%"></span><span class="ml" style="left:${pos(d)}%;transform:${i===3?"translateX(calc(-100% - 6px))":"translateX(8px)"}">${m}</span>`).join("")
+  +sorted.map((b,i)=>`<i class="${REVAMP.has(b[1])?"r":!inQ3(b)?"o":""}" style="left:${pos(b[0])}%;--i:${i}"></i>`).join("");
+
+/* month bars */
+const per={Jul:0,Aug:0,Sep:0};
+BUILDS.filter(inQ3).forEach(b=>{per[["Jul","Aug","Sep"][+b[0].slice(5,7)-7]]++});
+const mx=Math.max(...Object.values(per));
+$("monthBars").innerHTML=Object.entries(per).map(([k,v],i)=>`<div class="mbar"><span class="v" data-count="${v}">${v}</span><span class="b" style="height:${v/mx*150}px;--i:${i}"></span><span class="k">${k}</span></div>`).join("");
+
+/* top apps */
+const top=[...EVERY].sort((x,y)=>y.q3.length-x.q3.length).slice(0,6),tmax=top[0].q3.length;
+$("topApps").innerHTML=top.map((a,i)=>`<div class="ta" style="--i:${i}"><span>${esc(a.name)}</span><span class="bar"><b style="width:${a.q3.length/tmax*100}%"></b></span><span class="n">${a.q3.length}</span></div>`).join("");
+
+/* target-app board */
+const ORD=["regular","revamp","carried","ios"];
+const why={regular:"Q3 scope released, with two or more versions shipped.",revamp:"App fully rebuilt and released in late September.",carried:"Not completed in Q3. Finishing next quarter.",one:"One release in Q3. Target is ASO only.",ios:"Moved to iOS devs as part of the Product Engineering revamp."};
+const groups=ORD.map(s=>s==="ios"?IOS.map(n=>({name:n})):APPS.filter(a=>a.status===s));
+const detail=(s,a)=>s==="regular"?`${a.uniq} releases`:s==="revamp"?`v${a.q3[0][2]} · ${fmt(a.q3[0][0])}`:s==="carried"?CARRIED[a.name]:s==="one"?"Crash fix":"Product Eng.";
+let k=0;$("segbar").innerHTML=ORD.map((s,gi)=>groups[gi].map(()=>`<i style="background:${STATUS[s][2]};--i:${k++}"></i>`).join("")).join("");
+$("board").innerHTML=ORD.map((s,i)=>`<div class="bcol" style="--c:${STATUS[s][2]};--i:${i}"><div class="hd"><span class="chip ${STATUS[s][1]}">${STATUS[s][0]}</span><span class="big" data-count="${groups[i].length}">${groups[i].length}</span></div><p class="why">${why[s]}</p><ul>${groups[i].map(a=>`<li>${esc(a.name)}<span>${detail(s,a)}</span></li>`).join("")}</ul></div>`).join("");
+
+/* other apps */
+$("others").innerHTML=OTHERS.map((a,i)=>`<div class="oc lift" style="--i:${i}"><div class="hd"><span class="nm">${esc(a.name)}</span><span class="ct">${a.q3.length}</span></div>
+  <div class="mini">${MONTHS.slice(1).map(([m,d])=>`<span class="mg" style="left:${pos(d)}%"></span>`).join("")}${a.builds.map(b=>`<i class="${inQ3(b)?"":"oct"}" style="left:${pos(b[0])}%"></i>`).join("")}</div>
+  <ul>${a.builds.map(b=>`<li><span>${fmt(b[0])}</span><span>v${b[2]} · c${b[3]}${inQ3(b)?"":" · Oct"}</span></li>`).join("")}</ul>
+  <p>${esc(a.note||"")}</p></div>`).join("")+`<div class="otile" style="--i:${OTHERS.length}"><b>${OTHERS.reduce((n,a)=>n+a.q3.length,0)}</b><span>production releases across ${OTHERS.length} apps outside the Q3 targets</span></div>`;
+
+/* explorer */
+const list=$("appList"),view=$("appView");
+list.innerHTML=`<span class="grp">Q3 target apps</span>`+EVERY.map((a,i)=>(i===APPS.length?`<span class="grp">Other apps</span>`:"")+`<button class="appbtn" role="tab" data-i="${i}" aria-selected="false"><span class="nm"><i style="background:${STATUS[a.status][2]}"></i>${esc(a.name)}</span><span class="ct">${a.builds.length}</span></button>`).join("");
+function pick(i,anim){
+  const a=EVERY[i];
+  list.querySelectorAll(".appbtn").forEach(b=>b.setAttribute("aria-selected",b.dataset.i==i));
+  const builds=a.builds.length?`<ul class="blist">${a.builds.map((b,k)=>`<li style="--i:${k}"><span class="dt">${fmt(b[0])}</span><span class="vv">v${b[2]} · c${b[3]} <span class="chip ${inQ3(b)?"c-strong":"c-neutral"}">${inQ3(b)?"Released":"After Q3"}</span></span><span class="nt">${esc(b[4])}</span></li>`).join("")}</ul>`:`<p class="small">No releases.</p>`;
+  const tgt=a.target&&!a.targets.length?`<p class="small" style="font-size:16px">Q3 target app. Target metrics were not included in the source pack.</p>`:a.target?a.targets.map(t=>`<div class="mrow"><span class="lab">${esc(t[0])}</span><span class="val">${esc(t[1])}</span></div>`).join("")+`<p class="small">Outcome data pending.</p>`:`<p class="small" style="font-size:16px">Not a Q3 target app. Included to show all Android production releases.</p>`;
+  view.classList.remove("swap");
+  view.innerHTML=`<div class="ah"><h3>${esc(a.name)}</h3><span class="chip ${STATUS[a.status][1]}">${STATUS[a.status][0]}${a.builds.length?` · ${a.builds.length} build${a.builds.length===1?"":"s"}`:""}</span></div>
+  ${a.note&&a.target?`<div class="note ${a.status==="carried"?"int":""}">${esc(a.note)}</div>`:""}
+  <div class="aside"><div class="card"><h3>Q3 target</h3>${tgt}</div>
+  <div class="card"><h3>Production releases</h3><div class="scroll">${builds}</div></div></div>`;
+  if(anim){void view.offsetWidth;view.classList.add("swap")}
+}
+list.addEventListener("click",e=>{const b=e.target.closest(".appbtn");b&&pick(+b.dataset.i,true)});
+list.addEventListener("keydown",e=>{if(e.key==="ArrowDown"||e.key==="ArrowUp"){const btns=[...list.querySelectorAll(".appbtn")],i=btns.indexOf(document.activeElement);if(i<0)return;const n=btns[(i+(e.key==="ArrowDown"?1:-1)+btns.length)%btns.length];n.focus();pick(+n.dataset.i,true);e.preventDefault();e.stopPropagation()}});
+pick(0);
+
+
+/* rating-review initiative: same three rows, same order, on every card */
+const RAT=[
+ {name:"ID Photo",tag:"Pilot",chip:"c-risk",d28:[3.8,4.57,1],all:[3.8,4.0],daily:[4.4,4.5,0]},
+ {name:"Cleaner",tag:"Team rollout",chip:"c-strong",d28:[4.0,4.4],all:[3.9,4.46],daily:[4.4,4.6]},
+ {name:"PBP",tag:"Team rollout",chip:"c-strong",d28:[4.2,4.3],all:[4.21,4.27],daily:[4.6,4.8]},
+ {name:"App Blocker",tag:"Team rollout",chip:"c-strong",d28:null,all:[3.6,4.3],daily:[4.7,4.9]}
+];
+const rp=v=>((v-3.5)/1.5*100).toFixed(2), f2=v=>v.toFixed(2);
+const goalLine=`<span class="goal" style="left:${rp(4.5)}%"></span>`;
+const moveRow=(lab,v,k)=>v?`<div class="rrow" style="--k:${k}"><div class="lab"><span>${lab}</span><b>${f2(v[0])} → ${f2(v[1])}${v[2]?"+":""}</b></div><div class="rtrack">${goalLine}<span class="seg" style="left:${rp(v[0])}%;width:${(rp(v[1])-rp(v[0])).toFixed(2)}%"></span><span class="pt b" style="left:${rp(v[0])}%"></span><span class="pt a" style="left:${rp(v[1])}%"></span></div></div>`
+  :`<div class="rrow none" style="--k:${k}"><div class="lab"><span>${lab}</span><b>Not reported</b></div><div class="rtrack">${goalLine}</div></div>`;
+const bandRow=(lab,v,k)=>v?`<div class="rrow" style="--k:${k}"><div class="lab"><span>${lab}</span><b>${f2(v[0])} – ${f2(v[1])}${v[2]===0?"":"+"}</b></div><div class="rtrack">${goalLine}<span class="band" style="left:${rp(v[0])}%;width:${(rp(v[1])-rp(v[0])).toFixed(2)}%"></span></div></div>`
+  :`<div class="rrow none" style="--k:${k}"><div class="lab"><span>${lab}</span><b>Not reported</b></div><div class="rtrack">${goalLine}</div></div>`;
+$("ratings").innerHTML=RAT.map((a,i)=>`<div class="rc lift" style="--i:${i}"><div class="hd"><h3>${esc(a.name)}</h3><span class="chip ${a.chip}">${a.tag}</span></div>
+ <div class="delta">+${f2(a.all[1]-a.all[0])}<small>All-time rating change</small></div>
+ <div class="rrows">${moveRow("28-day average",a.d28,0)}${moveRow("All-time",a.all,1)}${bandRow("Daily average",a.daily,2)}</div>
+ <div class="axis">${[3.5,4,4.5,5].map(v=>`<span style="left:${rp(v)}%">${v.toFixed(1)}</span>`).join("")}</div></div>`).join("");
+
+/* ================= SCROLL DECK ================= */
+const root=document.documentElement,vp=$("viewport");
+const slides=[...document.querySelectorAll(".slide")],N=slides.length;let cur=-1;
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+/* wrap each slide in a full-screen snap panel */
+const panels=slides.map(s=>{const p=document.createElement("div");p.className="panel";p.id="s"+(slides.indexOf(s)+1);s.before(p);p.appendChild(s);s.classList.remove("active");return p});
+root.classList.add("armed");
+let flow=false;
+function fit(){
+  const w=innerWidth,hgt=innerHeight;
+  flow=w<820||(w<1000&&hgt>w);
+  root.classList.toggle("flow",flow);
+  if(!flow)root.style.setProperty("--s",Math.min((w-110)/1600,(hgt-40)/900));
+  if(flow)slides.forEach(s=>{s.style.removeProperty("--k");s.style.removeProperty("--o");s.style.removeProperty("--y")});
+  onScroll();
+}
+
+function countUp(slide){
+  if(reduce)return;
+  slide.querySelectorAll("[data-count]").forEach((el,k)=>{
+    const end=+el.dataset.count,t0=performance.now()+250+k*60,dur=1100;
+    el.textContent="0";
+    (function tick(t){const p=Math.min(1,Math.max(0,(t-t0)/dur)),e=1-Math.pow(1-p,3);el.textContent=Math.round(end*e);if(p<1)requestAnimationFrame(tick)})(performance.now());
+    setTimeout(()=>{el.textContent=end},250+k*60+dur+120);
+  });
+}
+function start(i){const s=slides[i];if(!s.classList.contains("go")){s.classList.add("go");countUp(s)}}
+
+const rail=$("rail");
+rail.innerHTML=slides.map((s,k)=>`<button data-k="${k}" aria-label="${esc(s.dataset.title)}"><span>${String(k+1).padStart(2,"0")} · ${esc(s.dataset.title)}</span></button>`).join("");
+rail.addEventListener("click",e=>{const b=e.target.closest("button");b&&go(+b.dataset.k)});
+const dots=[...rail.children];
+
+function setCur(i){
+  if(i===cur)return;cur=i;
+  slides.forEach((s,k)=>{s.classList.toggle("active",k===i)});
+  dots.forEach((d,k)=>d.classList.toggle("on",k===i));
+  $("count").textContent=`${String(i+1).padStart(2,"0")} / ${N}`;
+  $("prev").disabled=i===0;$("next").disabled=i===N-1;
+  try{history.replaceState(null,"","#s"+(i+1))}catch(e){}
+}
+
+let ticking=false;
+function onScroll(){
+  ticking=false;
+  const vh=vp.clientHeight,max=vp.scrollHeight-vh;
+  $("bar").style.width=(max>0?vp.scrollTop/max*100:100)+"%";
+  let best=0,bd=1e9;
+  panels.forEach((p,i)=>{
+    const r=p.getBoundingClientRect();
+    const d=r.top/vh;                       /* 0 = settled, <0 leaving upward, >0 arriving from below */
+    if(r.top<vh*0.72&&r.bottom>vh*0.2)start(i);
+    const c=Math.abs(r.top+r.height/2-vh/2);if(c<bd){bd=c;best=i}
+    if(flow||reduce)return;
+    if(d<-1.2||d>1.2)return;
+    const s=slides[i].style;
+    if(d<0){const a=Math.min(1,-d);
+      s.setProperty("--k",(1-.12*a).toFixed(4));s.setProperty("--o",(1-a).toFixed(3));s.setProperty("--y",(a*vh*.55).toFixed(1)+"px");}
+    else{const a=Math.min(1,d);
+      s.setProperty("--k",(1-.05*a).toFixed(4));s.setProperty("--o",(1-.35*a).toFixed(3));s.setProperty("--y","0px");}
+  });
+  setCur(best);
+}
+vp.addEventListener("scroll",()=>{if(!ticking){ticking=true;requestAnimationFrame(onScroll)}},{passive:true});
+addEventListener("resize",fit);
+
+function go(i){i=Math.max(0,Math.min(N-1,i));panels[i].scrollIntoView({behavior:reduce?"auto":"smooth",block:"start"})}
+$("prev").onclick=()=>go(cur-1);$("next").onclick=()=>go(cur+1);
+
+const ov=$("overview"),og=$("ogrid");
+function openOv(){og.innerHTML=slides.map((s,k)=>`<button class="ocard ${s.classList.contains("hero")?"h":""} ${k===cur?"cur":""}" style="--i:${k}" data-k="${k}"><span class="on">${String(k+1).padStart(2,"0")}</span><span class="ot">${esc(s.dataset.title)}</span><span class="os">${esc(s.dataset.sec)}</span></button>`).join("");ov.hidden=false;og.querySelector(".cur").focus()}
+function closeOv(){ov.hidden=true}
+og.addEventListener("click",e=>{const c=e.target.closest(".ocard");if(c){closeOv();go(+c.dataset.k)}});
+$("btnOverview").onclick=openOv;$("closeOv").onclick=closeOv;
+
+function curTheme(){return root.dataset.theme||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}
+function toggleTheme(){const t=curTheme()==="dark"?"light":"dark";root.dataset.theme=t;try{localStorage.setItem("deckTheme",t)}catch(e){}}
+try{const t=localStorage.getItem("deckTheme");if(t)root.dataset.theme=t}catch(e){}
+$("btnTheme").onclick=toggleTheme;
+function full(){try{if(document.fullscreenElement)document.exitFullscreen();else root.requestFullscreen().catch(()=>{})}catch(e){}}
+$("btnFull").onclick=full;
+
+document.addEventListener("keydown",e=>{
+  if(e.metaKey||e.ctrlKey||e.altKey)return;
+  if(!ov.hidden){if(e.key==="Escape"||e.key==="o"){closeOv();e.preventDefault()}return}
+  if(e.target.closest&&e.target.closest("input,textarea,select"))return;
+  const k=e.key;
+  if(!flow&&(k==="ArrowDown"||k==="ArrowRight"||k==="PageDown"||(k===" "&&!e.shiftKey))){go(cur+1);e.preventDefault()}
+  else if(!flow&&(k==="ArrowUp"||k==="ArrowLeft"||k==="PageUp"||(k===" "&&e.shiftKey))){go(cur-1);e.preventDefault()}
+  else if(k==="Home"){go(0);e.preventDefault()}
+  else if(k==="End"){go(N-1);e.preventDefault()}
+  else if(k==="o"||k==="O")openOv();
+  else if(k==="t"||k==="T")toggleTheme();
+  else if(k==="f"||k==="F")full();
+});
+/* explorer list arrow keys should not move the page */
+$("appList").addEventListener("keydown",e=>{if(e.key==="ArrowDown"||e.key==="ArrowUp")e.stopPropagation()},true);
+
+start(0);fit();
+const m=/^#s(\d+)$/.exec(location.hash);
+if(m){const i=Math.max(0,Math.min(N-1,+m[1]-1));panels[i].scrollIntoView({block:"start"});onScroll()}
+})();
+</script>
+</body>
+</html>
