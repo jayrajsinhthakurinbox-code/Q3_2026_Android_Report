@@ -467,7 +467,9 @@ h3{font-size:24px;line-height:1.2;font-weight:700;letter-spacing:-.01em}
 .fb.rev{background:var(--warn-soft);color:var(--warn)}
 .fb.wait{background:repeating-linear-gradient(135deg,var(--warn-soft) 0 8px,transparent 8px 16px);color:var(--warn)}
 .fb.ext{background:repeating-linear-gradient(135deg,var(--warn) 0 8px,var(--warn-soft) 8px 16px);color:var(--ink);border-radius:0 12px 12px 0}
-.fb.ext em{background:var(--surface);padding:2px 6px;border-radius:5px}
+.fb.ext em,.fb.hold em{background:var(--surface);padding:2px 6px;border-radius:5px}
+.fb.ext{justify-content:flex-end}
+.fb.hold{background:repeating-linear-gradient(135deg,var(--warn) 0 8px,var(--warn-soft) 8px 16px);color:var(--ink);border-radius:12px 0 0 12px}
 .chal .flowbar .fb:last-of-type{border-radius:0 12px 12px 0}
 .slide .fb{animation:gx .8s var(--ease) both}
 .slide .fb:nth-child(2){animation-delay:.7s}.slide .fb:nth-child(3){animation-delay:1.2s}.slide .fb:nth-child(1){animation-delay:.3s}
@@ -782,17 +784,17 @@ ul.dash li::before{content:"";position:absolute;left:0;top:.66em;width:10px;heig
     </div>
     <div class="chal lift" data-a style="--d:2">
       <span class="ix">02</span>
-      <h3>Design dependency held up the start and the middle of a build</h3>
-      <p>Waiting for design clearance, then taking up design-review tasks, used timeline that would otherwise have gone to development.</p>
+      <h3>Design clearance and review both waited on designer availability</h3>
+      <p>Design clearance took longer than the development itself. After a short build, design review waited again because the designer was not available for either step.</p>
       <div class="flowbar" aria-hidden="true">
-        <span class="fb wait" style="--w:24%"><em>Design clearance</em></span>
-        <span class="fb rev" style="--w:20%"><em>Design review</em></span>
-        <span class="fb dev" style="--w:46%"><em>Development</em></span>
-        <span class="plan" style="left:44%"><em>Planned dev start</em></span>
+        <span class="fb hold" style="--w:36%"><em>Design clearance</em></span>
+        <span class="fb dev" style="--w:20%"><em>Development</em></span>
+        <span class="fb ext" style="--w:36%"><em>Design review</em></span>
+        <span class="plan" style="left:66%"><em>Planned release</em></span>
       </div>
     </div>
   </div>
-  <p class="small" data-a style="--d:4">Bars show where the time went, not measured durations.</p>
+  <p class="small" data-a style="--d:4">Striped segments are time spent waiting. Bars show where the time went, not measured durations.</p>
   <div class="sf"><span>Android Engineering · Q3 2026</span><span class="grow"></span><span>Challenges</span></div>
 </section>
 
